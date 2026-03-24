@@ -199,3 +199,66 @@ if ( ! function_exists( 'ltwoo_spec_label_from_key' ) ) {
 add_action( 'init', function() {
     wp_deregister_script('heartbeat');
 }, 1 );
+
+
+
+/**
+ * Register a dedicated widget area for shop/archive page filters.
+ */
+add_action( 'widgets_init', 'quality_register_shop_filter_sidebar' );
+function quality_register_shop_filter_sidebar() {
+	register_sidebar( [
+		'name'          => __( 'Shop Filters', 'understrap' ),
+		'id'            => 'shop-filters-sidebar',
+		'description'   => __( 'Filter widgets shown on the shop and product archive pages.', 'understrap' ),
+		'before_widget' => '<div id="%1$s" class="widget %2$s">',
+		'after_widget'  => '</div>',
+		'before_title'  => '<h5 class="widget-title">',
+		'after_title'   => '</h5>',
+	] );
+}
+
+/**
+ * Replace Understrap's WooCommerce wrappers so that shop/archive pages get
+ * a dedicated filter sidebar instead of the general sidebar-position setting.
+ * Single product, cart, checkout, and account pages fall back to the original behaviour.
+ */
+add_action( 'after_setup_theme', 'quality_override_woo_wrappers', 20 );
+function quality_override_woo_wrappers() {
+	remove_action( 'woocommerce_before_main_content', 'understrap_woocommerce_wrapper_start', 10 );
+	remove_action( 'woocommerce_after_main_content',  'understrap_woocommerce_wrapper_end',   10 );
+	add_action( 'woocommerce_before_main_content', 'quality_woocommerce_wrapper_start', 10 );
+	add_action( 'woocommerce_after_main_content',  'quality_woocommerce_wrapper_end',   10 );
+}
+
+function quality_woocommerce_wrapper_start() {
+	$container  = get_theme_mod( 'understrap_container_type' ) ?: '';
+	$is_archive = is_shop() || is_product_category() || is_product_tag() || is_product_taxonomy();
+
+	echo '<div class="wrapper" id="woocommerce-wrapper">';
+	echo '<div class="' . esc_attr( $container ) . '" id="content" tabindex="-1">';
+	echo '<div class="row">';
+
+	if ( $is_archive && is_active_sidebar( 'shop-filters-sidebar' ) ) {
+		get_template_part( 'global-templates/shop-filter-sidebar' );
+		echo '<div class="col-md content-area" id="primary">';
+	} else {
+		get_template_part( 'global-templates/left-sidebar-check' );
+		echo '<main class="site-main" id="main">';
+	}
+}
+
+function quality_woocommerce_wrapper_end() {
+	$is_archive = is_shop() || is_product_category() || is_product_tag() || is_product_taxonomy();
+
+	if ( $is_archive && is_active_sidebar( 'shop-filters-sidebar' ) ) {
+		echo '</div><!-- #primary -->';
+	} else {
+		echo '</main>';
+		get_template_part( 'global-templates/right-sidebar-check' );
+	}
+
+	echo '</div><!-- .row -->';
+	echo '</div><!-- .container -->';
+	echo '</div><!-- #woocommerce-wrapper -->';
+}

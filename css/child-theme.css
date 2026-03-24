@@ -15180,4 +15180,163 @@ body.understrap-no-sidebar .wp-block-cover.alignwide {
   height: auto !important;
 }
 
+.shop-filter-sidebar {
+  padding-top: 1.5rem;
+}
+@media (min-width: 768px) {
+  .shop-filter-sidebar .shop-filter-widgets {
+    display: block !important;
+  }
+}
+.shop-filter-sidebar .widget {
+  margin-bottom: 0;
+  padding: 1.25rem 0;
+  border-bottom: 1px solid #dee2e6;
+}
+.shop-filter-sidebar .widget:first-child {
+  padding-top: 0;
+}
+.shop-filter-sidebar .widget:last-child {
+  border-bottom: none;
+}
+.shop-filter-sidebar .widget-title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.85rem;
+}
+.shop-filter-sidebar .woocommerce-widget-layered-nav .woocommerce-widget-layered-nav-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.shop-filter-sidebar .woocommerce-widget-layered-nav .woocommerce-widget-layered-nav-list__item {
+  padding: 0.2rem 0;
+}
+.shop-filter-sidebar .woocommerce-widget-layered-nav .woocommerce-widget-layered-nav-list__item a {
+  color: #212529;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+.shop-filter-sidebar .woocommerce-widget-layered-nav .woocommerce-widget-layered-nav-list__item a:hover {
+  color: #2C2C2C;
+}
+.shop-filter-sidebar .woocommerce-widget-layered-nav .woocommerce-widget-layered-nav-list__item.woocommerce-widget-layered-nav-list__item--chosen > a {
+  font-weight: 600;
+  color: #2C2C2C;
+}
+.shop-filter-sidebar .woocommerce-widget-layered-nav .woocommerce-widget-layered-nav-list__item.woocommerce-widget-layered-nav-list__item--chosen > a::before {
+  content: "✓ ";
+  font-size: 0.75em;
+}
+.shop-filter-sidebar .woocommerce-widget-layered-nav .woocommerce-widget-layered-nav-list__item .count {
+  color: #6c757d;
+  font-size: 0.8em;
+  margin-left: 0.2em;
+}
+.shop-filter-sidebar .woocommerce-widget-layered-nav .woocommerce-widget-layered-nav-list__item .count::before {
+  content: "(";
+}
+.shop-filter-sidebar .woocommerce-widget-layered-nav .woocommerce-widget-layered-nav-list__item .count::after {
+  content: ")";
+}
+.shop-filter-sidebar .woocommerce-widget-layered-nav-filters ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.shop-filter-sidebar .woocommerce-widget-layered-nav-filters li {
+  display: inline-flex;
+  align-items: center;
+}
+.shop-filter-sidebar .woocommerce-widget-layered-nav-filters a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.2rem 0.55rem;
+  background: #2C2C2C;
+  color: #fff;
+  border-radius: 3px;
+  font-size: 0.8rem;
+  text-decoration: none;
+}
+.shop-filter-sidebar .woocommerce-widget-layered-nav-filters a:hover {
+  background: #131313;
+  color: #fff;
+}
+.shop-filter-sidebar .woocommerce-widget-layered-nav-filters a .remove-filter-button::before {
+  content: "×";
+  font-size: 1.1em;
+  line-height: 1;
+}
+.shop-filter-sidebar .product-categories {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.9rem;
+}
+.shop-filter-sidebar .product-categories li {
+  padding: 0.2rem 0;
+}
+.shop-filter-sidebar .product-categories li a {
+  color: #212529;
+  text-decoration: none;
+}
+.shop-filter-sidebar .product-categories li a:hover {
+  color: #2C2C2C;
+}
+.shop-filter-sidebar .product-categories li.current-cat > a {
+  font-weight: 600;
+  color: #2C2C2C;
+}
+.shop-filter-sidebar .product-categories li .count {
+  color: #6c757d;
+  font-size: 0.8em;
+}
+.shop-filter-sidebar .product-categories li .count::before {
+  content: " (";
+}
+.shop-filter-sidebar .product-categories li .count::after {
+  content: ")";
+}
+.shop-filter-sidebar .product-categories ul.children {
+  list-style: none;
+  padding-left: 0.9rem;
+  margin: 0.2rem 0 0;
+}
+.shop-filter-sidebar .tagcloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+.shop-filter-sidebar .tagcloud a {
+  display: inline-block;
+  padding: 0.2rem 0.5rem;
+  border: 1px solid #dee2e6;
+  border-radius: 3px;
+  font-size: 0.8rem !important;
+  text-decoration: none;
+  color: #212529;
+  line-height: 1.4;
+  transition: background-color 0.15s, color 0.15s, border-color 0.15s;
+}
+.shop-filter-sidebar .tagcloud a:hover, .shop-filter-sidebar .tagcloud a.active-tag {
+  background: #2C2C2C;
+  color: #fff;
+  border-color: #2C2C2C;
+}
+.shop-filter-sidebar .shop-filter-toggle {
+  border-color: #dee2e6;
+  color: #212529;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+.shop-filter-sidebar .shop-filter-toggle[aria-expanded=true] {
+  background-color: #f8f9fa;
+}
+
 /*# sourceMappingURL=child-theme.css.map */
