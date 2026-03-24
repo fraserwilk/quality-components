@@ -1,0 +1,71 @@
+#wrapper-footer-full {
+    background-color: #000;
+    color: #fff;
+    padding: 1rem 1rem;
+    font-size: 0.9rem;
+}
+
+#wrapper-footer {
+    background-color: hsl(180, 1%, 15%);
+    color: #fff;
+}
+
+/* --- FOOTER FULL MENU — ONLY THIS WIDGET --- */
+
+#wrapper-footer-full .widget_nav_menu .menu-footer-full-container {
+    padding-top: 1.5rem;
+}
+
+/* Flex columns */
+#wrapper-footer-full .widget_nav_menu .menu {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4rem; /* space between columns */
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* Top-level items = columns */
+#wrapper-footer-full .widget_nav_menu .menu > li {
+    min-width: 180px;
+}
+
+/* Top-level headings */
+#wrapper-footer-full .widget_nav_menu .menu > li > a {
+    display: block;
+    margin-bottom: 0.75rem;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Sub-menu */
+#wrapper-footer-full .widget_nav_menu .sub-menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+#wrapper-footer-full .widget_nav_menu .sub-menu a {
+    display: block;
+    font-size: 14px;
+    line-height: 1.8;
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Mobile: stack columns */
+@media (max-width: 575.98px) {
+    #wrapper-footer-full .widget_nav_menu .menu {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    #wrapper-footer-full .widget_nav_menu .menu > li {
+        min-width: 0;
+    }
+}

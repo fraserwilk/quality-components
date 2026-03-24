@@ -1,0 +1,11 @@
+// Use this file to overwrite the basic Bootstrap variables and add your own variables
+// To overwrite a Bootstrap variable you don´t have to touch the Bootstrap folder.
+// Just copy a variable from src/sass/assets/bootstrap5/_variables.scss, paste it here and edit the value.
+
+
+$darkgray: #2C2C2C; // Thats a sample how you could change a BootStrap variable.
+$primary: $darkgray;  // Once we've changed the value, we'll also make it the primary brand color.
+
+$font-family-base: 'Roboto', sans-serif; // Custom font family
+
+$headings-font-family: 'Roboto', sans-serif; // Custom font family for headings

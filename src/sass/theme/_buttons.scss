@@ -1,0 +1,247 @@
+/* ===============================
+   Base button styles
+   =============================== */
+.wp-block-button__link {
+    display: inline-block;
+    padding: 0.6rem 1.6rem;
+    border-radius: 0; /* squared */
+    font-size: 0.95rem;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    line-height: 1.2;
+    border: 1px solid transparent;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.18s ease-out;
+}
+
+/* ===============================
+   PRIMARY (Default)
+   =============================== */
+.wp-block-button:not(.is-style-outline):not(.is-style-sm):not(.is-style-lg)
+    .wp-block-button__link {
+    background: #ff9800;
+    color: #000;
+    border-color: #ff9800;
+}
+
+.wp-block-button:not(.is-style-outline):not(.is-style-sm):not(.is-style-lg)
+    .wp-block-button__link:hover {
+    background: #e68900;
+    border-color: #e68900;
+}
+
+/* ===============================
+   OUTLINE
+   =============================== */
+.wp-block-button.is-style-outline .wp-block-button__link {
+    background: transparent;
+    border-color: #fff;
+    border-width: 1px;
+     color: #fff;
+    color: #fff;
+}
+
+.wp-block-button.is-style-outline .wp-block-button__link:hover {
+    background: rgba(255,255,255,0.1);
+}
+
+/* ===============================
+   OUTLINE–DARK (is-style-outline-dark)
+   =============================== */
+.wp-block-button.is-style-outline-dark > .wp-block-button__link,
+.wp-block-button.is-style-outline-dark .wp-block-button__link.wp-element-button {
+    background: transparent !important;
+    color: #2C2C2C !important;
+    border: 1px solid #2C2C2C !important;
+}
+
+.wp-block-button.is-style-outline-dark > .wp-block-button__link:hover,
+.wp-block-button.is-style-outline-dark .wp-block-button__link.wp-element-button:hover {
+    background: rgba(44,44,44,0.08) !important;
+    color: #2C2C2C !important;
+    border-color: #2C2C2C !important;
+}
+
+
+/* ===============================
+   SMALL BUTTON
+   =============================== */
+.wp-block-button.is-style-sm .wp-block-button__link {
+    padding: 0.35rem 1rem;
+    font-size: 0.8rem;
+}
+
+/* ===============================
+   LARGE BUTTON
+   =============================== */
+.wp-block-button.is-style-lg .wp-block-button__link {
+    padding: 0.9rem 2rem;
+    font-size: 1.1rem;
+}
+
+/* ===============================
+   DARK BUTTON (is-style-dark)
+   =============================== */
+.wp-block-button.is-style-dark .wp-block-button__link {
+    background: #2C2C2C;
+    color: #fff;
+    border-color: #2C2C2C;
+}
+
+.wp-block-button.is-style-dark .wp-block-button__link:hover {
+    background: #3a3a3a;
+    border-color: #3a3a3a;
+}
+
+/* ===============================
+   ACCENT BUTTON (is-style-accent)
+   Beige / Soft CTA
+   =============================== */
+.wp-block-button.is-style-accent .wp-block-button__link {
+    background: #e3e2d8;
+    color: #000;
+    border-color: #e3e2d8;
+}
+
+.wp-block-button.is-style-accent .wp-block-button__link:hover {
+    background: #d6d5cc;
+    border-color: #d6d5cc;
+}
+
+/* ===============================
+   LIGHT BUTTON (is-style-light)
+   Grey, subtle CTA
+   =============================== */
+.wp-block-button.is-style-light .wp-block-button__link {
+    background: #cdcdcd;
+    color: #000;
+    border-color: #cdcdcd;
+}
+
+.wp-block-button.is-style-light .wp-block-button__link:hover {
+    background: #bcbcbc;
+    border-color: #bcbcbc;
+}
+
+/* ===============================
+   OUTLINE – PRIMARY
+   =============================== */
+.wp-block-button.is-style-outline-primary > .wp-block-button__link,
+.wp-block-button.is-style-outline-primary .wp-block-button__link.wp-element-button {
+    background: transparent !important;
+    color: #ff9800 !important;
+    border: 1px solid #ff9800 !important;
+}
+
+.wp-block-button.is-style-outline-primary > .wp-block-button__link:hover,
+.wp-block-button.is-style-outline-primary .wp-block-button__link.wp-element-button:hover {
+    background: rgba(255,152,0,0.08) !important;
+    color: #ff9800 !important;
+    border-color: #ff9800 !important;
+}
+
+/* ===============================
+   OUTLINE – ACCENT (beige outline)
+   =============================== */
+.wp-block-button.is-style-outline-accent > .wp-block-button__link,
+.wp-block-button.is-style-outline-accent .wp-block-button__link.wp-element-button {
+    background: transparent !important;
+    color: #2C2C2C !important;
+    border: 1px solid #e3e2d8 !important;
+}
+
+.wp-block-button.is-style-outline-accent > .wp-block-button__link:hover,
+.wp-block-button.is-style-outline-accent .wp-block-button__link.wp-element-button:hover {
+    background: rgba(227,226,216,0.35) !important;
+    color: #2C2C2C !important;
+    border-color: #e3e2d8 !important;
+}
+
+/* ===============================
+   OUTLINE – LIGHT (grey outline)
+   =============================== */
+.wp-block-button.is-style-outline-light > .wp-block-button__link,
+.wp-block-button.is-style-outline-light .wp-block-button__link.wp-element-button {
+    background: transparent !important;
+    color: #2C2C2C !important;
+    border: 1px solid #cdcdcd !important;
+}
+
+.wp-block-button.is-style-outline-light > .wp-block-button__link:hover,
+.wp-block-button.is-style-outline-light .wp-block-button__link.wp-element-button:hover {
+    background: rgba(205,205,205,0.35) !important;
+    color: #2C2C2C !important;
+    border-color: #cdcdcd !important;
+}
+
+/* ===============================
+   GHOST – DARK (no border, dark text)
+   =============================== */
+.wp-block-button.is-style-ghost-dark > .wp-block-button__link,
+.wp-block-button.is-style-ghost-dark .wp-block-button__link.wp-element-button {
+    background: transparent !important;
+    color: #2C2C2C !important;
+    border: 1px solid transparent !important;
+}
+
+.wp-block-button.is-style-ghost-dark > .wp-block-button__link:hover,
+.wp-block-button.is-style-ghost-dark .wp-block-button__link.wp-element-button:hover {
+    background: rgba(44,44,44,0.06) !important;
+    color: #2C2C2C !important;
+}
+
+/* ===============================
+   GHOST – ACCENT (for dark bgs)
+   =============================== */
+.wp-block-button.is-style-ghost-accent > .wp-block-button__link,
+.wp-block-button.is-style-ghost-accent .wp-block-button__link.wp-element-button {
+    background: transparent !important;
+    color: #e3e2d8 !important;
+    border: 1px solid transparent !important;
+}
+
+.wp-block-button.is-style-ghost-accent > .wp-block-button__link:hover,
+.wp-block-button.is-style-ghost-accent .wp-block-button__link.wp-element-button:hover {
+    background: rgba(227,226,216,0.12) !important;
+    color: #e3e2d8 !important;
+}
+
+/* ===============================
+   HEADER BUTTONS (navbar only)
+   =============================== */
+
+/* Shared header button spacing */
+.header-buttons .btn,
+.header-buttons .custom-btn-signin,
+.header-buttons .custom-btn-apply {
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    padding: 6px 16px;
+    border-radius: 0;
+    display: inline-block;
+}
+
+/* Sign In – dark background, white border */
+.custom-btn-signin {
+    background: #2C2C2C;       /* updated to your dark brand color */
+    color: #fff;
+    border: 1px solid #777;
+}
+
+.custom-btn-signin:hover {
+    background: #3a3a3a;
+    color: #fff;
+}
+
+/* Dealer Application – light beige background (brand accent) */
+.custom-btn-apply {
+    background: #e3e2d8;       /* updated to your accent brand color */
+    color: #000;
+    border: 1px solid #e3e2d8;
+}
+
+.custom-btn-apply:hover {
+    background: #d6d5cc;
+    color: #000;
+}

@@ -1,0 +1,228 @@
+/* Layout */
+.ltwoo-product__top {
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
+    margin-bottom: 60px;
+}
+
+.ltwoo-product__gallery {
+    flex: 0 0 55%;
+}
+
+.ltwoo-product__gallery img{
+    width: auto !important;
+    max-width: 100%;
+    max-height: 80vh;
+    object-fit: contain;
+    margin: 0 auto;
+}
+
+@media (max-width: 900px) {
+    .ltwoo-product__top {
+        flex-direction: column;
+    }
+
+    .ltwoo-product__gallery {
+        flex: 0 0 auto;
+        width: 100%;
+    }
+
+    .ltwoo-product__gallery img {
+        max-height: 60vh;
+    }
+}
+
+
+.ltwoo-product__summary {
+    flex: 1;
+}
+
+/* Bottom section */
+.ltwoo-product__bottom {
+    border-top: 6px solid #000;
+    margin-top: 40px;
+    padding-top: 30px;
+}
+
+/* Tabs */
+.ltwoo-product__tabs {
+    display: flex;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 20px;
+}
+
+.ltwoo-tab {
+    border: none;
+    background: #000;
+    color: #fff;
+    padding: 10px 24px;
+    font-weight: 600;
+    text-transform: uppercase;
+    cursor: pointer;
+    margin-right: 2px;
+}
+
+.ltwoo-tab.is-active {
+    background: #ff9800; /* orange */
+}
+
+/* Panels */
+.ltwoo-panel {
+    display: none;
+}
+
+.ltwoo-panel.is-active {
+    display: block;
+}
+
+.ltwoo-panel__heading {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+/* Specs grid – 3 column feel like original */
+.ltwoo-spec-grid {
+    width: 100%;
+    border-collapse: collapse;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 1fr;
+    font-size: 14px;
+}
+
+.ltwoo-spec-row {
+    display: contents; /* let children sit on grid */
+}
+
+.ltwoo-spec-label,
+.ltwoo-spec-value,
+.ltwoo-spec-sub-label,
+.ltwoo-spec-sub-value {
+    padding: 10px 16px;
+    border-bottom: 1px solid #eee;
+    border-right: 1px solid #f4f4f4;
+    background: #f8f8f8;
+}
+
+.ltwoo-spec-value,
+.ltwoo-spec-sub-value {
+    background: #fafafa;
+}
+
+.ltwoo-spec-label {
+    grid-column: 1 / 2;
+    font-weight: 500;
+}
+
+.ltwoo-spec-value {
+    grid-column: 2 / 4;
+}
+
+/* Grouped rows like “Compatible teeth”, “Guide plate” */
+.ltwoo-spec-row--group .ltwoo-spec-label--group {
+    grid-row: span 3;
+}
+
+.ltwoo-spec-row--group .ltwoo-spec-sub-label,
+.ltwoo-spec-row--sub .ltwoo-spec-sub-label {
+    grid-column: 2 / 3;
+}
+
+.ltwoo-spec-row--group .ltwoo-spec-sub-value,
+.ltwoo-spec-row--sub .ltwoo-spec-sub-value {
+    grid-column: 3 / 4;
+}
+
+/* Small tweaks */
+.ltwoo-product__title {
+    margin-bottom: 8px;
+    text-transform: uppercase;
+}
+
+.ltwoo-product__code {
+    font-size: 14px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .ltwoo-product__top {
+        flex-direction: column;
+    }
+
+    .ltwoo-spec-grid {
+        display: block;
+    }
+}
+
+// Search bar
+/* Wrapper spacing */
+.ltwoo-search-wrapper {
+    margin: 1.2rem 0 2.5rem 0;
+    display: flex;
+    justify-content: start;
+}
+
+/* Form */
+.ltwoo-search-form {
+    position: relative;
+    width: 100%;
+    max-width: 100vw;
+}
+
+/* Search input */
+.ltwoo-search-field {
+    width: 100%;
+    padding: 1rem 3.25rem 1rem 1.125rem;
+    border-radius: 0.5rem;
+    border: 2px solid #ddd;
+    background: #f6f6f6;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: #000;
+    outline: none;
+    transition: all 0.25s ease;
+}
+
+/* Placeholder style */
+.ltwoo-search-field::placeholder {
+    color: #000;
+    opacity: 0.55;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+}
+
+/* Focus effect (L-TWOO orange) */
+.ltwoo-search-field:focus {
+    border-color: #ff9800;
+    background: #fff;
+}
+
+/* Search button */
+.ltwoo-search-submit {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    padding: 0 1.125rem;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
+
+/* Icon */
+.ltwoo-search-icon {
+    width: 1.125rem;
+    height: 1.125rem;
+    display: inline-block;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="9" r="7"/><line x1="14" y1="14" x2="19" y2="19"/>    </svg>');
+}
+
+.woocommerce-product-gallery__wrapper {
+    height: auto !important;
+}
