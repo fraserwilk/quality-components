@@ -195,6 +195,19 @@ if ( ! function_exists( 'ltwoo_spec_label_from_key' ) ) {
 }
 
 
+/**
+ * Load Font Awesome Pro via kit
+ */
+add_action( 'wp_enqueue_scripts', function() {
+	wp_enqueue_script( 'font-awesome-pro', 'https://kit.fontawesome.com/2e83392d18.js', [], null, false );
+	add_filter( 'script_loader_tag', function( $tag, $handle ) {
+		if ( 'font-awesome-pro' === $handle ) {
+			return str_replace( '<script ', '<script crossorigin="anonymous" ', $tag );
+		}
+		return $tag;
+	}, 10, 2 );
+} );
+
 /* 1. Kill the Heartbeat (The #1 cause of local hangs) */
 add_action( 'init', function() {
     wp_deregister_script('heartbeat');

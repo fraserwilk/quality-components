@@ -27,7 +27,7 @@ $container = get_theme_mod( 'understrap_container_type' );
 
 					<div class="site-info">
 
-						&copy; <?php echo date('Y') ?> L-TWOO Australia. All rights reserved.
+						&copy; <?php echo date('Y') ?> Quality Components Pty Ltd. All rights reserved.
 
 					</div><!-- .site-info -->
 

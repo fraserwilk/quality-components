@@ -7,7 +7,7 @@
 @import "assets/understrap/theme/woocommerce"; // <------- Loads WooCommerce style fixes. Comment out if you aren't using WooCommerce
 
 // Optional files - If you don´t use the corresponding scripts/fonts comment em out
-@import "assets/fontawesome/font-awesome";                           // <------- Font Awesome Icon font
+// @import "assets/fontawesome/font-awesome";                        // <------- Replaced by Font Awesome Pro kit (loaded via functions.php)
 @import "assets/underscores";                            // <------- Underscores media styles
 
 // Any additional imported files //
@@ -18,3 +18,4 @@
 @import "theme/footer";                              // <------- Custom footer styles for this child theme
 @import "theme/single-product";                      // <------- Custom single product styles for this child theme
 @import "theme/shop-filters";                        // <------- Shop filter sidebar styles
+@import "theme/archive-product";                     // <------- Category archive banner + subcategory tiles

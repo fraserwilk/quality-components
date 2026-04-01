@@ -53,11 +53,17 @@ $container = get_theme_mod( 'understrap_container_type' );
 		?>
 
 		<div class="header-buttons d-flex align-items-center gap-2 ms-auto">
-			<a href="/signin" class="btn btn-outline-light btn-sm custom-btn-signin">
-				Sign In
-			</a>
-			<a href="/dealer-application" class="btn btn-light btn-sm custom-btn-apply">
-				Dealer Application
+			<?php if ( is_user_logged_in() ) : ?>
+				<a href="<?php echo esc_url( wp_logout_url( home_url() ) ); ?>" class="btn btn-outline-light btn-sm custom-btn-signin">
+					Sign Out
+				</a>
+			<?php else : ?>
+				<a href="/my-account/" class="btn btn-outline-light btn-sm custom-btn-signin">
+					Sign In
+				</a>
+			<?php endif; ?>
+			<a href="/apply" class="btn btn-light btn-sm custom-btn-apply">
+				Become a Dealer
 			</a>
 		</div>
 

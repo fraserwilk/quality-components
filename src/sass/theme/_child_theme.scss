@@ -1,5 +1,31 @@
+body {
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+}
+
+#page {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+}
+
+#page-wrapper {
+	flex: 1;
+}
+
+#wrapper-navbar {
+	position: sticky;
+	top: 0;
+	z-index: 1030;
+}
+
 #page-wrapper {
 	padding-top: 0;
+}
+
+body:not(.home) #page-wrapper {
+	padding-top: 4rem;
 }
 
 .navbar-brand img {
@@ -24,7 +50,7 @@ ul#main-menu li a {
     h2 {
     font-size: clamp(3.5rem, 0.165rem + 7.8307vw, 6.625rem);;
     line-height: 1.1;
-    font-weight: 400;
+    font-weight: 700;
     text-transform: uppercase;
     }
 }
@@ -39,6 +65,89 @@ ul#main-menu li a {
     font-size: clamp(1.5rem, 0.6032rem + 1.6931vw, 2rem);;
 }
 
-.wp-block-group {
+/* .wp-block-group {
     color: #fff;
+} */
+
+// Dealer Benefits banner — increase height via padding
+#dealer-benefits {
+	padding-top: 8rem;
+	padding-bottom: 8rem;
+	margin-block: 6rem;
+
+	h2 {
+    font-size: clamp(3.5rem, 0.165rem + 7.8307vw, 6.625rem);;
+    line-height: 1.1;
+    font-weight: 700;
+    text-transform: uppercase;
+    }
+}
+
+// Flat rate shipping / features columns — centre content vertically & horizontally
+#hp-features {
+	margin-top: 8rem;
+
+	.wp-block-columns {
+		align-items: center;
+
+		.wp-block-column {
+			text-align: center;
+		}
+	}
+}
+
+#resources .wp-block-cover {
+	padding: 3rem;
+	margin-top: 4rem;
+
+	h2 {
+		font-size: clamp(2rem, 0.6032rem + 1.6931vw, 3rem);;
+		line-height: 1.1;
+		font-weight: 700;
+		text-transform: uppercase;
+	}
+}
+
+// Equal height columns with vertically stretched content
+// Scoped to columns that contain Cover or Group blocks (not simple icon/text columns)
+.wp-block-columns:has(> .wp-block-column > .wp-block-cover),
+.wp-block-columns:has(> .wp-block-column > .wp-block-group) {
+	align-items: stretch !important;
+
+	.wp-block-column {
+		display: flex;
+		flex-direction: column;
+
+		> .wp-block-cover,
+		> .wp-block-group {
+			flex: 1;
+			height: auto !important;
+			min-height: unset !important;
+		}
+	}
+}
+
+.wp-block-cover__inner-container,
+.wp-block-column > .wp-block-group > .wp-block-group__inner-container {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+
+	// Push the last block (button) to the bottom
+	> .wp-block-buttons,
+	> .wp-block-button {
+		margin-top: auto;
+	}
+}
+
+.entry-content .wp-block-media-text {
+	position: relative;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 100vw;
+	max-width: 100vw;
+	// Constrain inner content to match the page container (1320px at xxl)
+	padding-left: max(1.5rem, calc((100vw - 1320px) / 2 + 1.5rem));
+	padding-right: max(1.5rem, calc((100vw - 1320px) / 2 + 1.5rem));
+	box-sizing: border-box;
 }
