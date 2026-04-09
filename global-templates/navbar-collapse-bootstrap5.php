@@ -58,13 +58,10 @@ $container = get_theme_mod( 'understrap_container_type' );
 					Sign Out
 				</a>
 			<?php else : ?>
-				<a href="/my-account/" class="btn btn-outline-light btn-sm custom-btn-signin">
-					Sign In
+				<a href="/my-account/" class="btn btn-light btn-sm custom-btn-apply">
+					Sign In / Apply
 				</a>
 			<?php endif; ?>
-			<a href="/apply" class="btn btn-light btn-sm custom-btn-apply">
-				Become a Dealer
-			</a>
 		</div>
 
 	</div><!-- .container(-fluid) -->
