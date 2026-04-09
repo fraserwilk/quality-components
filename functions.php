@@ -208,12 +208,6 @@ add_action( 'wp_enqueue_scripts', function() {
 	}, 10, 2 );
 } );
 
-/* 1. Kill the Heartbeat (The #1 cause of local hangs) */
-add_action( 'init', function() {
-    wp_deregister_script('heartbeat');
-}, 1 );
-
-
 
 /**
  * Register a dedicated widget area for shop/archive page filters.
