@@ -11191,6 +11191,12 @@ body {
 
 #page-wrapper {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+#full-width-page-wrapper {
+  flex: 1;
 }
 
 #wrapper-navbar {
