@@ -269,3 +269,32 @@ function quality_woocommerce_wrapper_end() {
 	echo '</div><!-- .container -->';
 	echo '</div><!-- #woocommerce-wrapper -->';
 }
+
+
+/**
+ * Display SKU on shop/archive product loop cards.
+ * Shows "SKU: XXXXX" between the product title and price.
+ */
+add_action( 'woocommerce_after_shop_loop_item_title', 'quality_display_loop_sku', 6 );
+function quality_display_loop_sku() {
+	global $product;
+	if ( ! $product || ! wc_product_sku_enabled() ) {
+		return;
+	}
+	$sku = $product->get_sku();
+	if ( $sku ) {
+		echo '<div class="product-loop-sku">SKU: ' . esc_html( $sku ) . '</div>';
+	}
+}
+
+
+/**
+ * Remove right sidebar on single product pages.
+ */
+add_filter( 'theme_mod_understrap_sidebar_position', 'quality_single_product_no_sidebar' );
+function quality_single_product_no_sidebar( $position ) {
+	if ( is_product() ) {
+		return 'none';
+	}
+	return $position;
+}
