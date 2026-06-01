@@ -73,9 +73,10 @@ Never edit files in `css/` or `js/` directly — they are compiled output. Alway
 ### PHP Theme Structure
 
 - `functions.php` — Core theme hooks: dequeues parent styles, enqueues compiled child theme CSS/JS, sets Bootstrap 5 as default, registers block editor button variants, WooCommerce product tab JS, SVG upload support, registers `shop-filters-sidebar` widget area, disables Query Monitor hooks (`QM_DISABLE_HOOKS`)
-- `woocommerce/` — WooCommerce template overrides (see directory; covers cart, checkout, single product, account, loops)
-- `global-templates/` — Navbar and structural template parts
+- `woocommerce/` — WooCommerce template overrides: `archive-product.php`, `content-product.php`, `content-single-product.php`, `single-product.php`, plus subdirectories `cart/`, `checkout/`, `global/`, `loop/`, `my-account/`, `myaccount/`, `single-product/`
+- `global-templates/` — Navbar (`navbar-collapse-bootstrap5.php`), shop filter sidebar (`shop-filter-sidebar.php`), and structural template parts
 - `loop-templates/` — Content loop templates
+- `page-templates/blank.php` — Blank page template (no header/footer)
 - `inc/editor-color-palette.json` — Block editor color palette (13 Bootstrap colors)
 
 ### WordPress/WooCommerce Customisations
@@ -83,6 +84,7 @@ Never edit files in `css/` or `js/` directly — they are compiled output. Alway
 - Custom Bootstrap 5 navbar in `global-templates/navbar-collapse-bootstrap5.php`
 - Product spec label mapping via `ltwoo_spec_label_from_key()` in `functions.php` — edit the `$map` array there to add/rename spec fields (powered by ACF)
 - WooCommerce product tab switching JS (inline, in `functions.php`) — uses `data-tab-target` / `data-tab-panel` attributes and `ltwoo-tab` / `ltwoo-product` CSS classes; also re-initialises the WC product gallery on tab switch
+- `quality_single_product_sidebar()` in `functions.php` filters `theme_mod_understrap_sidebar_position` to force no sidebar on single product pages
 - Block editor button style variants registered via `register_block_style()`
 - Font Awesome Pro loaded via kit script (crossorigin)
 
@@ -106,4 +108,6 @@ Custom components use the `ltwoo-` prefix (e.g. `ltwoo-product`, `ltwoo-tab`).
 
 ## Coding Standards
 
-PHP code must comply with **WordPress Coding Standards** (`phpcs.xml.dist`). The text domains in use are `understrap` and `woocommerce`. PHPStan runs at `max` level; its scope is configured in `phpstan.neon.dist` (currently `inc/` — which is empty; add PHP files there when PHPStan analysis is needed, or expand paths in `phpstan.neon.dist`). PHPMD excludes WooCommerce template overrides. Both PHPStan and PHPMD have baseline files (`phpstan-baseline.neon`, `phpmd.baseline.xml`) for suppressing pre-existing issues.
+PHP code must comply with **WordPress Coding Standards** (`phpcs.xml.dist`). The text domains in use are `understrap` and `woocommerce`. PHPStan runs at `max` level; its scope is configured in `phpstan.neon.dist` (currently `inc/` — which is empty; add PHP files there when PHPStan analysis is needed, or expand paths in `phpstan.neon.dist`). PHPStan uses `src/phpstan/autoload.php` as its bootstrap. PHPMD excludes WooCommerce templates, all `*-templates/` directories (global, loop, page), and `src/`. Both PHPStan and PHPMD have baseline files (`phpstan-baseline.neon`, `phpmd.baseline.xml`) for suppressing pre-existing issues.
+
+There are no automated tests. Quality assurance is entirely through the static analysis and linting tools above.
