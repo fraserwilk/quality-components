@@ -11232,10 +11232,22 @@ ul#main-menu li a {
   color: #fff;
 }
 .fullwidth-hero h2, .fullwidth-hero .h2 {
-  font-size: clamp(3.5rem, 0.165rem + 7.8307vw, 6.625rem);
+  font-size: clamp(2.5rem, 0.165rem + 3.8307vw, 3.625rem);
   line-height: 1.1;
   font-weight: 700;
   text-transform: uppercase;
+  max-width: 50vw;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+.fullwidth-hero h3, .fullwidth-hero .h3 {
+  line-height: 1.1;
+  font-weight: 700;
+  max-width: 40vw;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* Keep hero inner content boxed (following Understrap's container width) */

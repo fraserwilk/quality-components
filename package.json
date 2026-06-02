@@ -65,5 +65,8 @@
     "sass": "^1.56.0",
     "terser": "^5.15.1",
     "understrap": "github:understrap/understrap#develop"
+  },
+  "dependencies": {
+    "caniuse-lite": "^1.0.30001793"
   }
 }
