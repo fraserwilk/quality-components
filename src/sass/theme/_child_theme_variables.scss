@@ -4,6 +4,7 @@
 
 
 $darkgray: #2C2C2C; // Thats a sample how you could change a BootStrap variable.
+$orange: hsl(36, 100%, 45%); // Custom orange color for the theme
 $primary: $darkgray;  // Once we've changed the value, we'll also make it the primary brand color.
 
 $font-family-base: 'Roboto', sans-serif; // Custom font family

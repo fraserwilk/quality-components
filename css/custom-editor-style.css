@@ -413,7 +413,7 @@ progress {
   --bs-purple: #6f42c1;
   --bs-pink: #d63384;
   --bs-red: #dc3545;
-  --bs-orange: #fd7e14;
+  --bs-orange: hsl(36deg, 100%, 45%);
   --bs-yellow: #ffc107;
   --bs-green: #198754;
   --bs-teal: #20c997;
@@ -853,7 +853,7 @@ progress {
   --bs-purple: #6f42c1;
   --bs-pink: #d63384;
   --bs-red: #dc3545;
-  --bs-orange: #fd7e14;
+  --bs-orange: hsl(36deg, 100%, 45%);
   --bs-yellow: #ffc107;
   --bs-green: #198754;
   --bs-teal: #20c997;
@@ -5164,16 +5164,16 @@ progress {
 
 .has-orange-color,
 .has-orange-color:visited {
-  color: #fd7e14;
+  color: hsl(36deg, 100%, 45%);
 }
 
 .has-orange-background-color {
-  background-color: #fd7e14;
-  border-color: #fd7e14;
+  background-color: hsl(36deg, 100%, 45%);
+  border-color: hsl(36deg, 100%, 45%);
 }
 
 .wp-block-button:hover .wp-block-button__link.has-white-background-color.has-orange-color {
-  color: #fd7e14;
+  color: hsl(36deg, 100%, 45%);
 }
 
 .has-yellow-color,

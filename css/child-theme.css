@@ -11,7 +11,7 @@
   --bs-purple: #6f42c1;
   --bs-pink: #d63384;
   --bs-red: #dc3545;
-  --bs-orange: #fd7e14;
+  --bs-orange: hsl(36deg, 100%, 45%);
   --bs-yellow: #ffc107;
   --bs-green: #198754;
   --bs-teal: #20c997;
@@ -11227,7 +11227,7 @@ ul#main-menu li a {
   max-width: 100vw !important;
   margin-left: calc(50% - 50vw) !important;
   margin-right: calc(50% - 50vw) !important;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   text-align: center;
   color: #fff;
 }
@@ -11242,12 +11242,22 @@ ul#main-menu li a {
   margin-right: auto;
 }
 .fullwidth-hero h3, .fullwidth-hero .h3 {
-  line-height: 1.1;
+  line-height: 1.3;
   font-weight: 700;
-  max-width: 40vw;
+  max-width: 50vw;
   text-align: center;
   margin-left: auto;
   margin-right: auto;
+}
+.fullwidth-hero h4, .fullwidth-hero .h4 {
+  font-size: clamp(1.2rem, 0.165rem + 1.307vw, 2.25rem);
+  line-height: 1.2;
+  font-weight: 400;
+  max-width: 60vw;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 1rem;
 }
 
 /* Keep hero inner content boxed (following Understrap's container width) */
@@ -11260,9 +11270,13 @@ ul#main-menu li a {
   font-size: clamp(1.5rem, 0.6032rem + 1.6931vw, 2rem);
 }
 
-/* .wp-block-group {
-    color: #fff;
-} */
+.sub-hero {
+  text-align: center;
+  text-transform: uppercase;
+  font-size: clamp(1.2rem, 0.6032rem + 1.6931vw, 1.5rem);
+  color: hsl(36deg, 100%, 45%);
+}
+
 #dealer-benefits {
   padding-top: 8rem;
   padding-bottom: 8rem;
@@ -11410,16 +11424,16 @@ ul#main-menu li a {
 
 .has-orange-color,
 .has-orange-color:visited {
-  color: #fd7e14;
+  color: hsl(36deg, 100%, 45%);
 }
 
 .has-orange-background-color {
-  background-color: #fd7e14;
-  border-color: #fd7e14;
+  background-color: hsl(36deg, 100%, 45%);
+  border-color: hsl(36deg, 100%, 45%);
 }
 
 .wp-block-button:hover .wp-block-button__link.has-white-background-color.has-orange-color {
-  color: #fd7e14;
+  color: hsl(36deg, 100%, 45%);
 }
 
 .has-yellow-color,
@@ -12627,6 +12641,54 @@ body.understrap-no-sidebar .wp-block-cover.alignwide {
 
 .woocommerce-products-header {
   display: none;
+}
+
+.wp-block-group__inner-container:has(.trust-bar__tagline) {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem 2rem;
+  padding: 1.25rem 2rem;
+  border-bottom: 1px solid #e5e5e5;
+  margin-bottom: 2rem;
+}
+
+.trust-bar__tagline {
+  flex-basis: 100%;
+  text-align: center;
+  font-size: 1.1rem;
+  color: #666;
+  margin: 0 !important;
+  line-height: 1.6;
+}
+
+.trust-bar__item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #1a1a1a;
+}
+
+.trust-bar__icon {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+}
+
+.trust-bar {
+  all: unset;
+}
+
+@media (max-width: 600px) {
+  .wp-block-group__inner-container:has(.trust-bar__tagline) {
+    flex-direction: column !important;
+    gap: 0.6rem;
+  }
 }
 
 /*# sourceMappingURL=child-theme.css.map */
