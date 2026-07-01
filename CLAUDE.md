@@ -64,7 +64,7 @@ Never edit files in `css/` or `js/` directly — they are compiled output. Alway
 ### Key Source Files
 
 - `src/sass/child-theme.scss` — Main SCSS entry point; imports Bootstrap 5, Understrap, WooCommerce, Font Awesome, and custom partials
-- `src/sass/theme/` — Custom SCSS partials: `_child_theme_variables.scss`, `_child_theme.scss` (main custom rules), `_buttons.scss`, `_footer.scss`, `_single-product.scss`, `_archive-product.scss`, `_shop-filters.scss`
+- `src/sass/theme/` — Custom SCSS partials: `_child_theme_variables.scss`, `_child_theme.scss` (main custom rules), `_buttons.scss`, `_footer.scss`, `_single-product.scss`, `_archive-product.scss`, `_shop-filters.scss`, `_trust-bar.scss` (trust/benefits bar on home page, uses `.wp-block-group__inner-container:has(.trust-bar__tagline)` and `.trust-bar__item` classes)
 - `src/js/custom-javascript.js` — Place for custom JS additions
 - `src/js/bootstrap.js` — Bootstrap 5 component imports
 - `src/build/` — Rollup, PostCSS, Babel, Terser, and BrowserSync configs
@@ -84,7 +84,8 @@ Never edit files in `css/` or `js/` directly — they are compiled output. Alway
 - Custom Bootstrap 5 navbar in `global-templates/navbar-collapse-bootstrap5.php`
 - Product spec label mapping via `ltwoo_spec_label_from_key()` in `functions.php` — edit the `$map` array there to add/rename spec fields (powered by ACF)
 - WooCommerce product tab switching JS (inline, in `functions.php`) — uses `data-tab-target` / `data-tab-panel` attributes and `ltwoo-tab` / `ltwoo-product` CSS classes; also re-initialises the WC product gallery on tab switch
-- `quality_single_product_sidebar()` in `functions.php` filters `theme_mod_understrap_sidebar_position` to force no sidebar on single product pages
+- `quality_single_product_no_sidebar()` in `functions.php` filters `theme_mod_understrap_sidebar_position` to force no sidebar on single product pages
+- `quality_display_loop_sku()` in `functions.php` hooks `woocommerce_after_shop_loop_item_title` (priority 6) to display `SKU: XXXXX` between product title and price on shop/archive loop cards
 - Block editor button style variants registered via `register_block_style()`
 - Font Awesome Pro loaded via kit script (crossorigin)
 
