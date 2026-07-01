@@ -298,3 +298,17 @@ function quality_single_product_no_sidebar( $position ) {
 	}
 	return $position;
 }
+
+add_action( 'woocommerce_archive_description', 'qc_category_description_under_image', 20 );
+
+function qc_category_description_under_image() {
+    if ( is_product_category() ) {
+        $term = get_queried_object();
+
+        if ( ! empty( $term->description ) ) {
+            echo '<div class="qc-category-description">';
+            echo wpautop( wp_kses_post( $term->description ) );
+            echo '</div>';
+        }
+    }
+}
