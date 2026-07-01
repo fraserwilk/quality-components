@@ -11220,7 +11220,6 @@ body:not(.home) #page-wrapper {
 
 ul#main-menu li a {
   text-transform: uppercase;
-  color: #fff;
 }
 
 .fullwidth-hero {
@@ -12650,7 +12649,7 @@ body.understrap-no-sidebar .wp-block-cover.alignwide {
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: 0.75rem 2rem;
+  gap: 1.75rem 2rem;
   padding: 1.25rem 2rem;
   border-bottom: 1px solid #e5e5e5;
   margin-bottom: 2rem;
