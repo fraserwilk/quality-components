@@ -12639,6 +12639,37 @@ body.understrap-no-sidebar .wp-block-cover.alignwide {
   letter-spacing: 0.04em;
 }
 
+.qc-products-separator-spacer {
+  display: none;
+}
+
+.qc-products-separator {
+  float: none !important;
+  clear: both;
+  width: 100%;
+  flex: 0 0 100%;
+  grid-column: 1/-1;
+  display: flex !important;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem 0 0.5rem;
+  list-style: none;
+}
+.qc-products-separator::before, .qc-products-separator::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #dee2e6;
+}
+.qc-products-separator span {
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #6c757d;
+  white-space: nowrap;
+}
+
 .woocommerce-products-header {
   display: none;
 }

@@ -91,6 +91,47 @@
 	letter-spacing: 0.04em;
 }
 
+// ── Products separator (between subcategory tiles and first product) ──
+// Invisible parity-fix spacer: display:none hides it but it still counts
+// in :nth-child so WooCommerce's mobile float pairing stays correct.
+.qc-products-separator-spacer {
+	display: none;
+}
+
+
+.qc-products-separator {
+	// WooCommerce uses float-based product grid — break out of it
+	float: none !important;
+	clear: both;
+	width: 100%;
+	// Flex/grid layout fallbacks
+	flex: 0 0 100%;
+	grid-column: 1 / -1;
+	// Make this <li> itself a flex row for the label + rule lines
+	display: flex !important;
+	align-items: center;
+	gap: 1rem;
+	padding: 1.5rem 0 0.5rem;
+	list-style: none;
+
+	&::before,
+	&::after {
+		content: '';
+		flex: 1;
+		height: 1px;
+		background: $border-color;
+	}
+
+	span {
+		font-size: 0.85rem;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		color: $secondary;
+		white-space: nowrap;
+	}
+}
+
 // ── Suppress WooCommerce's built-in archive header ────────────
 // WC outputs its own category image/description via woocommerce_shop_loop_header.
 // We render our own banner above, so hide the duplicate.

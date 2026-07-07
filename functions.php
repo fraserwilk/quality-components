@@ -312,3 +312,67 @@ function qc_category_description_under_image() {
         }
     }
 }
+
+add_action( 'woocommerce_before_subcategory_title', function( $category ) {
+    if ( ! empty( $category->description ) ) {
+        echo '<div class="woocommerce-loop-category__description">' . esc_html( $category->description ) . '</div>';
+    }
+} );
+
+/**
+ * Remove category title on Cat main pages.
+ */
+add_action( 'wp_head', function() {
+    ?>
+    <style>
+    .woocommerce-loop-category__title { display: none; }
+    </style>
+    <?php
+} );
+
+/**
+ * Add a separator between product categories and products
+ * on WooCommerce archive/category pages.
+ */
+add_action( 'woocommerce_shop_loop', 'qc_insert_products_separator_before_first_product', 1 );
+
+function qc_insert_products_separator_before_first_product() {
+    static $separator_shown = false;
+
+    if ( $separator_shown ) {
+        return;
+    }
+
+    $separator_shown = true;
+
+    if ( ! is_product_category() && ! is_shop() ) {
+        return;
+    }
+
+    if ( 'both' !== woocommerce_get_loop_display_mode() ) {
+        return;
+    }
+
+    $parent_id     = is_shop() ? 0 : get_queried_object_id();
+    $subcategories = woocommerce_get_product_subcategories( $parent_id );
+    $subcat_count  = is_array( $subcategories ) ? count( $subcategories ) : 0;
+
+    if ( 0 === $subcat_count ) {
+        return;
+    }
+
+    // Subcategory tiles increment the WC loop counter via wc_get_loop_class().
+    // Reset it so products start fresh with correct first/last column classes.
+    wc_set_loop_prop( 'loop', 0 );
+
+    // WooCommerce's mobile CSS uses :nth-child(2n) to pair products into 2-column rows,
+    // counting ALL <li> siblings including subcategory tiles and this separator.
+    // When subcat count is even, the separator lands at an odd position making Product 1
+    // land at an even position (float:right, appearing alone). A display:none spacer shifts
+    // the count by 1 so Product 1 is always at an odd position (float:left, correctly paired).
+    if ( 0 === $subcat_count % 2 ) {
+        echo '<li class="qc-products-separator-spacer" aria-hidden="true"></li>';
+    }
+
+    echo '<li class="qc-products-separator"><span>Products</span></li>';
+}
