@@ -376,3 +376,157 @@ function qc_insert_products_separator_before_first_product() {
 
     echo '<li class="qc-products-separator"><span>Products</span></li>';
 }
+
+/**
+ * Register ACF fields for the L-TWOO landing page template.
+ */
+add_action( 'acf/init', 'ltwoo_register_landing_page_fields' );
+function ltwoo_register_landing_page_fields() {
+
+    if ( ! function_exists( 'acf_add_local_field_group' ) ) {
+        return;
+    }
+
+    acf_add_local_field_group(
+        [
+            'key'      => 'group_ltwoo_landing_page',
+            'title'    => 'L-TWOO Landing Page',
+            'fields'   => [
+                [
+                    'key'   => 'field_ltwoo_hero_eyebrow',
+                    'label' => 'Hero Eyebrow',
+                    'name'  => 'hero_eyebrow',
+                    'type'  => 'text',
+                ],
+                [
+                    'key'   => 'field_ltwoo_hero_heading',
+                    'label' => 'Hero Heading',
+                    'name'  => 'hero_heading',
+                    'type'  => 'text',
+                ],
+                [
+                    'key'   => 'field_ltwoo_hero_text',
+                    'label' => 'Hero Text',
+                    'name'  => 'hero_text',
+                    'type'  => 'textarea',
+                ],
+                [
+                    'key'   => 'field_ltwoo_hero_primary_label',
+                    'label' => 'Hero Primary Button Label',
+                    'name'  => 'hero_primary_label',
+                    'type'  => 'text',
+                ],
+                [
+                    'key'   => 'field_ltwoo_hero_primary_url',
+                    'label' => 'Hero Primary Button URL',
+                    'name'  => 'hero_primary_url',
+                    'type'  => 'text',
+                ],
+                [
+                    'key'   => 'field_ltwoo_hero_secondary_label',
+                    'label' => 'Hero Secondary Button Label',
+                    'name'  => 'hero_secondary_label',
+                    'type'  => 'text',
+                ],
+                [
+                    'key'   => 'field_ltwoo_hero_secondary_url',
+                    'label' => 'Hero Secondary Button URL',
+                    'name'  => 'hero_secondary_url',
+                    'type'  => 'text',
+                ],
+                [
+                    'key'           => 'field_ltwoo_hero_bg_image',
+                    'label'         => 'Hero Background Image',
+                    'name'          => 'hero_bg_image',
+                    'type'          => 'image',
+                    'return_format' => 'url',
+                ],
+                [
+                    'key'          => 'field_ltwoo_cards',
+                    'label'        => 'Feature Cards',
+                    'name'         => 'cards',
+                    'type'         => 'repeater',
+                    'layout'       => 'block',
+                    'button_label' => 'Add Card',
+                    'sub_fields'   => [
+                        [
+                            'key'   => 'field_ltwoo_card_title',
+                            'label' => 'Title',
+                            'name'  => 'title',
+                            'type'  => 'text',
+                        ],
+                        [
+                            'key'   => 'field_ltwoo_card_text',
+                            'label' => 'Text',
+                            'name'  => 'text',
+                            'type'  => 'textarea',
+                        ],
+                    ],
+                ],
+                [
+                    'key'   => 'field_ltwoo_cta_eyebrow',
+                    'label' => 'CTA Section Eyebrow',
+                    'name'  => 'cta_eyebrow',
+                    'type'  => 'text',
+                ],
+                [
+                    'key'   => 'field_ltwoo_cta_heading',
+                    'label' => 'CTA Section Heading',
+                    'name'  => 'cta_heading',
+                    'type'  => 'text',
+                ],
+                [
+                    'key'   => 'field_ltwoo_cta_text',
+                    'label' => 'CTA Section Text',
+                    'name'  => 'cta_text',
+                    'type'  => 'textarea',
+                ],
+                [
+                    'key'   => 'field_ltwoo_cta_button_label',
+                    'label' => 'CTA Button Label',
+                    'name'  => 'cta_button_label',
+                    'type'  => 'text',
+                ],
+                [
+                    'key'   => 'field_ltwoo_cta_button_url',
+                    'label' => 'CTA Button URL',
+                    'name'  => 'cta_button_url',
+                    'type'  => 'text',
+                ],
+                [
+                    'key'   => 'field_ltwoo_contact_heading',
+                    'label' => 'Contact Panel Heading',
+                    'name'  => 'contact_heading',
+                    'type'  => 'text',
+                ],
+                [
+                    'key'   => 'field_ltwoo_contact_text',
+                    'label' => 'Contact Panel Text',
+                    'name'  => 'contact_text',
+                    'type'  => 'textarea',
+                ],
+                [
+                    'key'   => 'field_ltwoo_contact_button_label',
+                    'label' => 'Contact Button Label',
+                    'name'  => 'contact_button_label',
+                    'type'  => 'text',
+                ],
+                [
+                    'key'   => 'field_ltwoo_contact_button_url',
+                    'label' => 'Contact Button URL',
+                    'name'  => 'contact_button_url',
+                    'type'  => 'text',
+                ],
+            ],
+            'location' => [
+                [
+                    [
+                        'param'    => 'page_template',
+                        'operator' => '==',
+                        'value'    => 'page-templates/page-ltwoo.php',
+                    ],
+                ],
+            ],
+        ]
+    );
+}

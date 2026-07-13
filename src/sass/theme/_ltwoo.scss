@@ -1,0 +1,138 @@
+:root {
+    --ltwoo-primary: #ff9800;
+    --ltwoo-dark: #202020;
+    --ltwoo-charcoal: #2c2c2c;
+    --ltwoo-light: #f4f4f1;
+    --ltwoo-border: #deded9;
+    --ltwoo-muted: #686868;
+}
+
+.ltwoo-landing-page {
+    overflow: hidden;
+}
+
+.ltwoo-hero {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-height: 72vh;
+    color: #fff;
+    background-color: var(--ltwoo-dark);
+    background-size: cover;
+    background-position: center;
+}
+
+.ltwoo-hero::before {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    content: "";
+}
+
+.ltwoo-hero > .container {
+    position: relative;
+    z-index: 1;
+}
+
+.ltwoo-hero h1 {
+    max-width: 850px;
+    font-size: clamp(2.8rem, 7vw, 5.5rem);
+    font-weight: 700;
+    line-height: 0.98;
+}
+
+.ltwoo-hero p {
+    max-width: 700px;
+}
+
+.ltwoo-eyebrow {
+    margin-bottom: 1rem;
+    color: var(--ltwoo-primary);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+.ltwoo-card {
+    height: 100%;
+    padding: clamp(1.5rem, 3vw, 2.25rem);
+    background: #fff;
+    border: 1px solid var(--ltwoo-border);
+    transition:
+        transform 180ms ease,
+        box-shadow 180ms ease,
+        border-color 180ms ease;
+}
+
+.ltwoo-card:hover {
+    border-color: var(--ltwoo-primary);
+    box-shadow: 0 1.25rem 3rem rgba(0, 0, 0, 0.1);
+    transform: translateY(-6px);
+}
+
+.ltwoo-card h2,
+.ltwoo-card h3 {
+    font-weight: 700;
+}
+
+.ltwoo-card p {
+    color: var(--ltwoo-muted);
+}
+
+.ltwoo-dark-section {
+    padding-top: clamp(3rem, 7vw, 6rem);
+    padding-bottom: clamp(3rem, 7vw, 6rem);
+    color: #fff;
+    background: var(--ltwoo-charcoal);
+}
+
+.ltwoo-dark-section a:not(.btn) {
+    color: #fff;
+}
+
+.ltwoo-light-section {
+    padding-top: clamp(3rem, 7vw, 6rem);
+    padding-bottom: clamp(3rem, 7vw, 6rem);
+    background: var(--ltwoo-light);
+}
+
+.ltwoo-contact-panel {
+    height: 100%;
+    padding: clamp(2rem, 5vw, 4rem);
+    background: #fff;
+}
+
+.ltwoo-btn {
+    padding: 0.85rem 1.4rem;
+    border-radius: 0;
+    font-weight: 700;
+    color: #111;
+    background: var(--ltwoo-primary);
+    border-color: var(--ltwoo-primary);
+}
+
+.ltwoo-btn:hover {
+    color: #fff;
+    background: #dc8300;
+    border-color: #dc8300;
+}
+
+.ltwoo-btn-outline {
+    padding: 0.85rem 1.4rem;
+    border-radius: 0;
+    font-weight: 700;
+    color: inherit;
+    background: transparent;
+    border: 1px solid currentColor;
+}
+
+.ltwoo-btn-outline:hover {
+    color: #111;
+    background: #fff;
+}
+
+.ltwoo-landing-page .col > .ltwoo-card,
+.ltwoo-landing-page .col > .ltwoo-contact-panel {
+    height: 100%;
+}
