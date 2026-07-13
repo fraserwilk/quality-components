@@ -530,3 +530,34 @@ function ltwoo_register_landing_page_fields() {
         ]
     );
 }
+
+/**
+ * Rank Math falls back to a raw, unsanitized get_the_excerpt() for the og/twitter
+ * description whenever its own description resolves empty (no manual SEO description,
+ * no excerpt, no post content — the case for any hardcoded-template page with no real
+ * post_content, not just this one). The Understrap parent theme's `wp_trim_excerpt`
+ * filter unconditionally appends a raw "Read More..." link to every excerpt, so that
+ * raw HTML was leaking into link previews. Supplying a non-empty description here for
+ * any content-less page keeps Rank Math from ever reaching that fallback.
+ */
+add_filter( 'rank_math/frontend/description', 'qc_rank_math_empty_content_description' );
+function qc_rank_math_empty_content_description( $description ) {
+    // L-TWOO landing page: prefer the hero copy over a generic fallback.
+    if ( is_page_template( 'page-templates/page-ltwoo.php' ) ) {
+        $hero_text = get_field( 'hero_text' );
+        if ( $hero_text ) {
+            return wp_strip_all_tags( $hero_text );
+        }
+    }
+
+    if ( '' !== trim( wp_strip_all_tags( $description ) ) ) {
+        return $description;
+    }
+
+    $post_id = get_the_ID();
+    if ( ! $post_id || '' !== trim( wp_strip_all_tags( get_post_field( 'post_content', $post_id ) ) ) ) {
+        return $description;
+    }
+
+    return get_bloginfo( 'description' ) ?: get_the_title( $post_id );
+}

@@ -52,7 +52,7 @@ $cta_button_url    = get_field('cta_button_url') ?: wc_get_page_permalink('shop'
 $contact_heading      = get_field('contact_heading') ?: __('Talk to our team', 'understrap-child');
 $contact_text         = get_field('contact_text') ?: __('Get in touch for pricing, dealer enquiries, or product support.', 'understrap-child');
 $contact_button_label = get_field('contact_button_label') ?: __('Contact us', 'understrap-child');
-$contact_button_url   = get_field('contact_button_url') ?: home_url('/contact/');
+$contact_button_url   = get_field('contact_button_url') ?: home_url('/my-account');
 ?>
 
 <main id="primary" class="site-main ltwoo-landing-page">
