@@ -4,29 +4,6 @@
  *
  * @package UnderstrapChild
 
-/**
- * Hide other shipping methods when Free Shipping is available.
- */
-add_filter( 'woocommerce_package_rates', 'qc_hide_shipping_when_free_available', 10, 2 );
-function qc_hide_shipping_when_free_available( $rates, $package ) {
-	$has_free = false;
-	foreach ( $rates as $rate_id => $rate ) {
-		if ( 'free_shipping' === $rate->method_id ) {
-			$has_free = true;
-			break;
-		}
-	}
-	if ( $has_free ) {
-		$new_rates = [];
-		foreach ( $rates as $rate_id => $rate ) {
-			if ( 'free_shipping' === $rate->method_id ) {
-				$new_rates[ $rate_id ] = $rate;
-			}
-		}
-		return $new_rates;
-	}
-	return $rates;
-}
 
 
 // Exit if accessed directly.
@@ -671,4 +648,47 @@ function ltwoo_render_fa_icon_block() {
     $icon_style = get_field( 'icon_style' );
     $style_attr = $icon_style ? ' style="' . esc_attr( $icon_style ) . '"' : '';
     echo '<i class="' . esc_attr( $icon_class ) . '"' . $style_attr . '></i>';
+}
+
+/**
+ * Hide other shipping methods when Free Shipping is available.
+ * Ensure Postage ($25 flat rate) is the default shipping method.
+ */
+add_filter( 'woocommerce_package_rates', 'qc_hide_shipping_when_free_available', 10, 2 );
+function qc_hide_shipping_when_free_available( $rates, $package ) {
+	$has_free = false;
+	foreach ( $rates as $rate_id => $rate ) {
+		if ( 'free_shipping' === $rate->method_id ) {
+			$has_free = true;
+			break;
+		}
+	}
+
+	// If free shipping is available, show ONLY free shipping.
+	if ( $has_free ) {
+		$new_rates = [];
+		foreach ( $rates as $rate_id => $rate ) {
+			if ( 'free_shipping' === $rate->method_id ) {
+				$new_rates[ $rate_id ] = $rate;
+			}
+		}
+		return $new_rates;
+	}
+
+	// Otherwise, ensure Postage ($25 flat rate) is the first/default option.
+	$sorted_rates = [];
+	foreach ( $rates as $rate_id => $rate ) {
+		if ( 'flat_rate' === $rate->method_id ) {
+			$sorted_rates[ $rate_id ] = $rate;
+			break;
+		}
+	}
+	// Add everything else (Local Pickup).
+	foreach ( $rates as $rate_id => $rate ) {
+		if ( 'flat_rate' !== $rate->method_id ) {
+			$sorted_rates[ $rate_id ] = $rate;
+		}
+	}
+
+	return $sorted_rates;
 }
