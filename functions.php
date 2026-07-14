@@ -196,17 +196,36 @@ if ( ! function_exists( 'ltwoo_spec_label_from_key' ) ) {
 
 
 /**
- * Load Font Awesome Pro via kit
+ * Font Awesome Kit Setup
+ *
+ * This will add your Font Awesome Kit to the front-end, the admin back-end,
+ * and the login screen area.
  */
-add_action( 'wp_enqueue_scripts', function() {
-	wp_enqueue_script( 'font-awesome-pro', 'https://kit.fontawesome.com/f84f17191f.js', [], null, false );
-	add_filter( 'script_loader_tag', function( $tag, $handle ) {
-		if ( 'font-awesome-pro' === $handle ) {
-			return str_replace( '<script ', '<script crossorigin="anonymous" ', $tag );
-		}
-		return $tag;
-	}, 10, 2 );
-} );
+if (! function_exists('fa_custom_setup_kit') ) {
+  function fa_custom_setup_kit($kit_url = '') {
+    // The CSS build of the same kit is what actually renders inside the block
+    // editor's iframed canvas (only stylesheets get mirrored in there, not scripts).
+    $kit_css_url = preg_replace('/\.js$/', '.css', $kit_url);
+
+    foreach ( [ 'wp_enqueue_scripts', 'admin_enqueue_scripts', 'login_enqueue_scripts', 'enqueue_block_assets' ] as $action ) {
+      add_action(
+        $action,
+        function () use ( $kit_url, $kit_css_url ) {
+          wp_enqueue_script( 'font-awesome-kit', $kit_url, [], null );
+          wp_enqueue_style( 'font-awesome-kit-css', $kit_css_url, [], null );
+        }
+      );
+    }
+  }
+}
+fa_custom_setup_kit('https://kit.fontawesome.com/f84f17191f.js');
+
+add_filter( 'script_loader_tag', function( $tag, $handle ) {
+	if ( 'font-awesome-kit' === $handle ) {
+		return str_replace( '<script ', '<script crossorigin="anonymous" ', $tag );
+	}
+	return $tag;
+}, 10, 2 );
 
 
 /**
@@ -560,4 +579,72 @@ function qc_rank_math_empty_content_description( $description ) {
     }
 
     return get_bloginfo( 'description' ) ?: get_the_title( $post_id );
+}
+
+/**
+ * "FA Icon" ACF block. ACF blocks preview via ServerSideRender, which injects real
+ * rendered markup directly into the main block editor canvas (unlike the Custom HTML
+ * block's isolated sandbox), so the icon actually shows while editing.
+ */
+add_action( 'acf/init', 'ltwoo_register_fa_icon_block' );
+function ltwoo_register_fa_icon_block() {
+
+    if ( ! function_exists( 'acf_register_block_type' ) ) {
+        return;
+    }
+
+    acf_register_block_type(
+        [
+            'name'            => 'fa-icon',
+            'title'           => __( 'FA Icon', 'understrap-child' ),
+            'description'     => __( 'A single Font Awesome icon.', 'understrap-child' ),
+            'category'        => 'widgets',
+            'icon'            => 'star-filled',
+            'keywords'        => [ 'icon', 'fontawesome', 'fa' ],
+            'render_callback' => 'ltwoo_render_fa_icon_block',
+            'supports'        => [ 'align' => false ],
+        ]
+    );
+
+    acf_add_local_field_group(
+        [
+            'key'      => 'group_ltwoo_fa_icon_block',
+            'title'    => 'FA Icon Block',
+            'fields'   => [
+                [
+                    'key'         => 'field_ltwoo_fa_icon_class',
+                    'label'       => 'Icon Classes',
+                    'name'        => 'icon_class',
+                    'type'        => 'text',
+                    'instructions' => 'e.g. fa-duotone fa-regular fa-store fa-2x',
+                ],
+                [
+                    'key'         => 'field_ltwoo_fa_icon_style',
+                    'label'       => 'Custom Style (optional)',
+                    'name'        => 'icon_style',
+                    'type'        => 'text',
+                    'instructions' => 'e.g. --fa-primary-color: rgb(245, 131, 0); --fa-secondary-color: rgb(241, 241, 241);',
+                ],
+            ],
+            'location' => [
+                [
+                    [
+                        'param'    => 'block',
+                        'operator' => '==',
+                        'value'    => 'acf/fa-icon',
+                    ],
+                ],
+            ],
+        ]
+    );
+}
+
+function ltwoo_render_fa_icon_block() {
+    $icon_class = get_field( 'icon_class' );
+    if ( ! $icon_class ) {
+        return;
+    }
+    $icon_style = get_field( 'icon_style' );
+    $style_attr = $icon_style ? ' style="' . esc_attr( $icon_style ) . '"' : '';
+    echo '<i class="' . esc_attr( $icon_class ) . '"' . $style_attr . '></i>';
 }
