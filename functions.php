@@ -3,7 +3,31 @@
  * Understrap Child Theme functions and definitions
  *
  * @package UnderstrapChild
+
+/**
+ * Hide other shipping methods when Free Shipping is available.
  */
+add_filter( 'woocommerce_package_rates', 'qc_hide_shipping_when_free_available', 10, 2 );
+function qc_hide_shipping_when_free_available( $rates, $package ) {
+	$has_free = false;
+	foreach ( $rates as $rate_id => $rate ) {
+		if ( 'free_shipping' === $rate->method_id ) {
+			$has_free = true;
+			break;
+		}
+	}
+	if ( $has_free ) {
+		$new_rates = [];
+		foreach ( $rates as $rate_id => $rate ) {
+			if ( 'free_shipping' === $rate->method_id ) {
+				$new_rates[ $rate_id ] = $rate;
+			}
+		}
+		return $new_rates;
+	}
+	return $rates;
+}
+
 
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
