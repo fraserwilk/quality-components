@@ -680,15 +680,14 @@ function qc_hide_shipping_when_free_available( $rates, $package ) {
 		return $new_rates;
 	}
 
-	// Otherwise, ensure Postage ($25 flat rate) is the first/default option.
+	// Otherwise, ensure flat rate methods (e.g. Postage) come before everything
+	// else (e.g. Local Pickup), keeping all flat rate methods, not just the first.
 	$sorted_rates = [];
 	foreach ( $rates as $rate_id => $rate ) {
 		if ( 'flat_rate' === $rate->method_id ) {
 			$sorted_rates[ $rate_id ] = $rate;
-			break;
 		}
 	}
-	// Add everything else (Local Pickup).
 	foreach ( $rates as $rate_id => $rate ) {
 		if ( 'flat_rate' !== $rate->method_id ) {
 			$sorted_rates[ $rate_id ] = $rate;
