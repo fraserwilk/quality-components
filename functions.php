@@ -654,6 +654,11 @@ function ltwoo_render_fa_icon_block() {
  * Hide other shipping methods when Free Shipping is available.
  * Ensure Postage ($25 flat rate) is the default shipping method.
  */
+
+/**
+ * Hide other shipping methods when Free Shipping is available.
+ * Ensure Postage ($25) is the default shipping method.
+ */
 add_filter( 'woocommerce_package_rates', 'qc_hide_shipping_when_free_available', 10, 2 );
 function qc_hide_shipping_when_free_available( $rates, $package ) {
 	$has_free = false;
@@ -692,3 +697,8 @@ function qc_hide_shipping_when_free_available( $rates, $package ) {
 
 	return $sorted_rates;
 }
+
+/**
+ * Disable shipping rates caching so our reordering takes effect immediately.
+ */
+add_filter( 'woocommerce_shipping_rates_cache_enabled', '__return_false' );
