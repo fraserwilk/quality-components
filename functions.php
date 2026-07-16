@@ -701,3 +701,67 @@ function qc_hide_shipping_when_free_available( $rates, $package ) {
  * Disable shipping rates caching so our reordering takes effect immediately.
  */
 add_filter( 'woocommerce_shipping_rates_cache_enabled', '__return_false' );
+
+/**
+ * Append cart icon to the end of the primary nav menu.
+ */
+add_filter( 'wp_nav_menu_items', 'quality_add_cart_to_menu', 10, 2 );
+function quality_add_cart_to_menu( $items, $args ) {
+	if ( 'primary' !== $args->theme_location || ! class_exists( 'WooCommerce' ) ) {
+		return $items;
+	}
+
+	$count = WC()->cart->get_cart_contents_count();
+	$hide  = $count > 0 ? '' : 'display:none;';
+
+	$cart_item = '<li class="menu-item menu-item-type-custom d-none d-md-block">';
+	$cart_item .= '<a href="' . esc_url( wc_get_cart_url() ) . '" class="nav-link cart-icon-header" title="View cart">';
+	$cart_item .= '<span class="d-inline-block position-relative">';
+	$cart_item .= '<i class="fa-duotone fa-light fa-cart-shopping fa-xl" style="--fa-primary-color: rgb(245, 131, 0); --fa-secondary-color: rgb(255, 255, 255);"></i>';
+	$cart_item .= '<span class="position-absolute badge rounded-pill bg-warning text-dark cart-count" style="font-size:0.55rem; top:0; right:0; transform:translate(50%,-50%); ' . $hide . '">';
+	$cart_item .= esc_html( $count );
+	$cart_item .= '</span>';
+	$cart_item .= '</span>';
+	$cart_item .= '</a>';
+	$cart_item .= '</li>';
+
+	return $items . $cart_item;
+}
+
+/**
+ * Ensure cart fragments script loads — this makes AJAX add-to-cart updates work.
+ */
+add_action( 'wp_enqueue_scripts', 'quality_ensure_cart_fragments' );
+function quality_ensure_cart_fragments() {
+	if ( class_exists( 'WooCommerce' ) ) {
+		wp_enqueue_script( 'wc-cart-fragments' );
+	}
+}
+
+/**
+ * Cart fragment — serve updated badge HTML to the fragments system.
+ */
+add_filter( 'woocommerce_add_to_cart_fragments', 'quality_cart_count_fragment' );
+function quality_cart_count_fragment( $fragments ) {
+	ob_start();
+	$count = WC()->cart->get_cart_contents_count();
+	?>
+	<span class="position-absolute badge rounded-pill bg-warning text-dark cart-count" style="font-size:0.55rem; top:0; right:0; transform:translate(50%,-50%); <?php echo $count > 0 ? '' : 'display:none;'; ?>">
+		<?php echo esc_html( $count ); ?>
+	</span>
+	<?php
+	$fragments['.cart-count'] = ob_get_clean();
+	return $fragments;
+}
+
+/**
+ * Exclude cart scripts from LiteSpeed deferral.
+ */
+add_filter( 'litespeed_optm_js_defer_exc', 'quality_exclude_cart_js_from_litespeed' );
+add_filter( 'litespeed_optm_js_delay_exc', 'quality_exclude_cart_js_from_litespeed' );
+function quality_exclude_cart_js_from_litespeed( $excludes ) {
+	$excludes[] = 'wc-cart-fragments';
+	$excludes[] = 'wc-add-to-cart';
+	$excludes[] = 'woocommerce';
+	return $excludes;
+}

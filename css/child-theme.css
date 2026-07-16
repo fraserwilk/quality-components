@@ -11352,6 +11352,17 @@ ul#main-menu li a {
   box-sizing: border-box;
 }
 
+.cart-icon-header {
+  opacity: 0.85;
+  transition: opacity 0.2s ease;
+}
+.cart-icon-header:hover {
+  opacity: 1;
+}
+.cart-icon-header:hover i {
+  --fa-primary-color: rgb(255, 132, 0);
+}
+
 .has-blue-color,
 .has-blue-color:visited {
   color: #0d6efd;

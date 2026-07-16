@@ -187,3 +187,17 @@ ul#main-menu li a {
 	padding-right: max(1.5rem, calc((100vw - 1320px) / 2 + 1.5rem));
 	box-sizing: border-box;
 }
+
+// Cart icon header hover
+.cart-icon-header {
+	opacity: 0.85;
+	transition: opacity 0.2s ease;
+
+	&:hover {
+		opacity: 1;
+
+		i {
+			--fa-primary-color: rgb(255, 132, 0);
+		}
+	}
+}

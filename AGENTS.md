@@ -1,0 +1,114 @@
+# AGENTS.md
+
+This file provides guidance to Codex (Codex.ai/code) when working with code in this repository.
+
+## Project Overview
+
+WordPress child theme built on the **Understrap** framework (Bootstrap 5 + Underscores base), with WooCommerce support. The theme is named "Quality Components Child" and is developed by TruWeb.
+
+- Parent theme: Understrap
+- CSS framework: Bootstrap 5.2.2
+- PHP: >=5.6, Node: >=14
+
+## Local Environment
+
+- **Stack:** MAMP PRO
+- **PHP binary:** `/Applications/MAMP/bin/php/php8.4.17/bin/php`
+- **MySQL socket:** `/Applications/MAMP/tmp/mysql/mysql.sock`
+- **MySQL binary:** `/Applications/MAMP/Library/bin/mysql80/bin/mysql`
+- **DB name:** `wp_ltwoo`, **DB user:** `wp_WordPress_user`
+- **Local URL:** `http://qualitycomponents.local:8890`
+- **WP root:** `/Users/fraser/dev-websites/ltwoo/`
+
+When running WP-CLI or PHP scripts from the CLI, use the MAMP PHP binary and pass `--path=/Users/fraser/dev-websites/ltwoo` to WP-CLI. WP-CLI phar lives at `wp-content/themes/quality-components/wp-cli.phar`.
+
+Example:
+```bash
+/Applications/MAMP/bin/php/php8.4.17/bin/php wp-cli.phar --path=/Users/fraser/dev-websites/ltwoo plugin list
+```
+
+## Build Commands
+
+### Frontend (Node/npm)
+
+```bash
+npm run dist         # Build production CSS and JS (both)
+npm run css          # Compile, post-process, and minify SCSS only
+npm run js           # Bundle, transpile (Babel), and minify JS only
+npm run watch        # Watch src/ and auto-rebuild on changes
+npm run watch-bs     # Watch + BrowserSync live reload server
+```
+
+### PHP Quality Assurance (Composer)
+
+```bash
+composer php-lint         # PHP syntax check
+composer phpcs            # Check against WordPress Coding Standards
+composer phpcs-fix        # Auto-fix coding standards violations
+composer phpmd            # PHP Mess Detector
+composer phpstan          # Static analysis (level: max), analyzes inc/ only
+composer phpstan-baseline # Regenerate PHPStan baseline (suppress new accepted errors)
+composer phpmd-baseline   # Regenerate PHPMD baseline
+```
+
+## Architecture
+
+### Build Pipeline
+
+**SCSS → CSS:** `src/sass/` → Sass compiler → PostCSS/Autoprefixer → CleanCSS minifier → `css/child-theme.css` + `css/child-theme.min.css`. `src/sass/custom-editor-style.scss` is also compiled in parallel to `css/custom-editor-style.css` (block editor stylesheet).
+
+**JS → JS:** `src/js/` → Rollup bundler → Babel transpiler → Terser minifier → `js/child-theme.js` + `js/child-theme.min.js`
+
+Never edit files in `css/` or `js/` directly — they are compiled output. Always edit source files in `src/`.
+
+### Key Source Files
+
+- `src/sass/child-theme.scss` — Main SCSS entry point; imports Bootstrap 5, Understrap, WooCommerce, Font Awesome, and custom partials
+- `src/sass/theme/` — Custom SCSS partials: `_child_theme_variables.scss`, `_child_theme.scss` (main custom rules), `_buttons.scss`, `_footer.scss`, `_single-product.scss`, `_archive-product.scss`, `_shop-filters.scss`, `_trust-bar.scss` (trust/benefits bar on home page, uses `.wp-block-group__inner-container:has(.trust-bar__tagline)` and `.trust-bar__item` classes)
+- `src/js/custom-javascript.js` — Place for custom JS additions
+- `src/js/bootstrap.js` — Bootstrap 5 component imports
+- `src/build/` — Rollup, PostCSS, Babel, Terser, and BrowserSync configs
+- `js/customizer-controls.js` — Hand-written (not compiled); enqueued only in the Customizer via `understrap_child_customize_controls_js()`
+
+### PHP Theme Structure
+
+- `functions.php` — Core theme hooks: dequeues parent styles, enqueues compiled child theme CSS/JS, sets Bootstrap 5 as default, registers block editor button variants, WooCommerce product tab JS, SVG upload support, registers `shop-filters-sidebar` widget area, disables Query Monitor hooks (`QM_DISABLE_HOOKS`)
+- `woocommerce/` — WooCommerce template overrides: `archive-product.php`, `content-product.php`, `content-single-product.php`, `single-product.php`, plus subdirectories `cart/`, `checkout/`, `global/`, `loop/`, `my-account/`, `myaccount/`, `single-product/`
+- `global-templates/` — Navbar (`navbar-collapse-bootstrap5.php`), shop filter sidebar (`shop-filter-sidebar.php`), and structural template parts
+- `loop-templates/` — Content loop templates
+- `page-templates/blank.php` — Blank page template (no header/footer)
+- `inc/editor-color-palette.json` — Block editor color palette (13 Bootstrap colors)
+
+### WordPress/WooCommerce Customisations
+
+- Custom Bootstrap 5 navbar in `global-templates/navbar-collapse-bootstrap5.php`
+- Product spec label mapping via `ltwoo_spec_label_from_key()` in `functions.php` — edit the `$map` array there to add/rename spec fields (powered by ACF)
+- WooCommerce product tab switching JS (inline, in `functions.php`) — uses `data-tab-target` / `data-tab-panel` attributes and `ltwoo-tab` / `ltwoo-product` CSS classes; also re-initialises the WC product gallery on tab switch
+- `quality_single_product_no_sidebar()` in `functions.php` filters `theme_mod_understrap_sidebar_position` to force no sidebar on single product pages
+- `quality_display_loop_sku()` in `functions.php` hooks `woocommerce_after_shop_loop_item_title` (priority 6) to display `SKU: XXXXX` between product title and price on shop/archive loop cards
+- Block editor button style variants registered via `register_block_style()`
+- Font Awesome Pro loaded via kit script (crossorigin)
+
+### WooCommerce Layout Architecture
+
+The default Understrap WooCommerce wrappers are removed and replaced by `quality_woocommerce_wrapper_start/end()` in `functions.php`. The behaviour forks:
+
+- **Shop / archive pages** (`is_shop()`, `is_product_category()`, etc.) — renders the `shop-filters-sidebar` widget area (registered in `functions.php`) via `global-templates/shop-filter-sidebar.php` as a sidebar column, then a `.col-md` content area
+- **All other WC pages** (single product, cart, checkout, account) — falls back to the standard Understrap left/right sidebar check (`left-sidebar-check` / `right-sidebar-check` template parts, defined in the parent theme)
+
+`woocommerce/archive-product.php` also prepends a category banner (background image, title, description, subcategory tiles) when viewing a product category.
+
+### Key Plugin Dependencies
+
+- **B2BKing** — B2B wholesale functionality (wholesale pricing, customer groups). Located in `wp-content/plugins/b2bking/`.
+- **ACF (Advanced Custom Fields)** — used for product spec fields; `ltwoo_spec_label_from_key()` maps ACF field keys to display labels.
+
+### CSS Class Conventions
+
+Custom components use the `ltwoo-` prefix (e.g. `ltwoo-product`, `ltwoo-tab`).
+
+## Coding Standards
+
+PHP code must comply with **WordPress Coding Standards** (`phpcs.xml.dist`). The text domains in use are `understrap` and `woocommerce`. PHPStan runs at `max` level; its scope is configured in `phpstan.neon.dist` (currently `inc/` — which is empty; add PHP files there when PHPStan analysis is needed, or expand paths in `phpstan.neon.dist`). PHPStan uses `src/phpstan/autoload.php` as its bootstrap. PHPMD excludes WooCommerce templates, all `*-templates/` directories (global, loop, page), and `src/`. Both PHPStan and PHPMD have baseline files (`phpstan-baseline.neon`, `phpmd.baseline.xml`) for suppressing pre-existing issues.
+
+There are no automated tests. Quality assurance is entirely through the static analysis and linting tools above.
