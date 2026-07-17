@@ -3,8 +3,7 @@
  * Understrap Child Theme functions and definitions
  *
  * @package UnderstrapChild
-
-
+ */
 
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
@@ -46,7 +45,7 @@ function theme_enqueue_styles() {
 	
 	$js_version = $theme_version . '.' . filemtime( get_stylesheet_directory() . $theme_scripts );
 	
-	wp_enqueue_script( 'child-understrap-scripts', get_stylesheet_directory_uri() . $theme_scripts, array(), $js_version, true );
+	wp_enqueue_script( 'child-understrap-scripts', get_stylesheet_directory_uri() . $theme_scripts, array( 'jquery' ), $js_version, true );
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
 	}
@@ -93,13 +92,6 @@ function understrap_child_customize_controls_js() {
 	);
 }
 add_action( 'customize_controls_enqueue_scripts', 'understrap_child_customize_controls_js' );
-
-// Allow SVG
-function allow_svg_uploads($mimes) {
-    $mimes['svg'] = 'image/svg+xml';
-    return $mimes;
-}
-add_filter('upload_mimes', 'allow_svg_uploads');
 
 // Show button variants in the block “Styles” panel
 add_action( 'init', function () {
@@ -698,20 +690,29 @@ function qc_hide_shipping_when_free_available( $rates, $package ) {
 }
 
 /**
- * Disable shipping rates caching so our reordering takes effect immediately.
- */
-add_filter( 'woocommerce_shipping_rates_cache_enabled', '__return_false' );
-
-/**
  * Append cart icon to the end of the primary nav menu.
  */
 add_filter( 'wp_nav_menu_items', 'quality_add_cart_to_menu', 10, 2 );
+
+/**
+ * Return the current cart item count when the WooCommerce cart is available.
+ *
+ * @return int
+ */
+function quality_get_cart_count() {
+	if ( ! function_exists( 'WC' ) || ! WC()->cart ) {
+		return 0;
+	}
+
+	return WC()->cart->get_cart_contents_count();
+}
+
 function quality_add_cart_to_menu( $items, $args ) {
 	if ( 'primary' !== $args->theme_location || ! class_exists( 'WooCommerce' ) ) {
 		return $items;
 	}
 
-	$count = WC()->cart->get_cart_contents_count();
+	$count = quality_get_cart_count();
 	$hide  = $count > 0 ? '' : 'display:none;';
 
 	$cart_item = '<li class="menu-item menu-item-type-custom d-none d-md-block">';
@@ -744,7 +745,7 @@ function quality_ensure_cart_fragments() {
 add_filter( 'woocommerce_add_to_cart_fragments', 'quality_cart_count_fragment' );
 function quality_cart_count_fragment( $fragments ) {
 	ob_start();
-	$count = WC()->cart->get_cart_contents_count();
+	$count = quality_get_cart_count();
 	?>
 	<span class="position-absolute badge rounded-pill bg-warning text-dark cart-count" style="font-size:0.55rem; top:0; right:0; transform:translate(50%,-50%); <?php echo $count > 0 ? '' : 'display:none;'; ?>">
 		<?php echo esc_html( $count ); ?>
