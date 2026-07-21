@@ -201,3 +201,35 @@ ul#main-menu li a {
 		}
 	}
 }
+
+// Keep Cart Block product specifications readable without stacking every value
+// beneath its label on narrow layouts.
+.wp-block-woocommerce-cart .wc-block-components-product-details {
+	display: grid;
+	row-gap: 0.15rem;
+
+	> span {
+		display: grid;
+		grid-template-columns: minmax(9rem, 42%) minmax(0, 1fr);
+		column-gap: 0.5rem;
+		align-items: start;
+
+		> [aria-hidden="true"] {
+			display: none;
+		}
+	}
+
+	&__name,
+	&__value {
+		display: block;
+		min-width: 0;
+		word-break: normal;
+		overflow-wrap: normal;
+	}
+}
+
+@media (max-width: 479.98px) {
+	.wp-block-woocommerce-cart .wc-block-components-product-details > span {
+		grid-template-columns: minmax(7.5rem, 42%) minmax(0, 1fr);
+	}
+}

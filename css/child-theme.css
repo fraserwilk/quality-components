@@ -11363,6 +11363,32 @@ ul#main-menu li a {
   --fa-primary-color: rgb(255, 132, 0);
 }
 
+.wp-block-woocommerce-cart .wc-block-components-product-details {
+  display: grid;
+  row-gap: 0.15rem;
+}
+.wp-block-woocommerce-cart .wc-block-components-product-details > span {
+  display: grid;
+  grid-template-columns: minmax(9rem, 42%) minmax(0, 1fr);
+  -moz-column-gap: 0.5rem;
+  column-gap: 0.5rem;
+  align-items: start;
+}
+.wp-block-woocommerce-cart .wc-block-components-product-details > span > [aria-hidden=true] {
+  display: none;
+}
+.wp-block-woocommerce-cart .wc-block-components-product-details__name, .wp-block-woocommerce-cart .wc-block-components-product-details__value {
+  display: block;
+  min-width: 0;
+  word-break: normal;
+  overflow-wrap: normal;
+}
+
+@media (max-width: 479.98px) {
+  .wp-block-woocommerce-cart .wc-block-components-product-details > span {
+    grid-template-columns: minmax(7.5rem, 42%) minmax(0, 1fr);
+  }
+}
 .has-blue-color,
 .has-blue-color:visited {
   color: #0d6efd;
@@ -12867,6 +12893,15 @@ body.understrap-no-sidebar .wp-block-cover.alignwide {
 .ltwoo-landing-page .col > .ltwoo-card,
 .ltwoo-landing-page .col > .ltwoo-contact-panel {
   height: 100%;
+}
+
+/**
+ * Remove all product metadata from the block-based cart/checkout.
+ * The Store API sends multiple fields that wc-block-components-product-metadata
+ * reads from. Pure CSS approach — hides the component entirely.
+ */
+.wc-block-components-product-metadata {
+  display: none !important;
 }
 
 /*# sourceMappingURL=child-theme.css.map */

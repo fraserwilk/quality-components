@@ -755,6 +755,7 @@ function quality_cart_count_fragment( $fragments ) {
 	return $fragments;
 }
 
+
 /**
  * Exclude cart scripts from LiteSpeed deferral.
  */

@@ -1,0 +1,11 @@
+
+/**
+ * Remove all product metadata from the block-based cart/checkout.
+ * The Store API sends multiple fields that wc-block-components-product-metadata
+ * reads from. Pure CSS approach — hides the component entirely.
+ */
+
+.wc-block-components-product-metadata {
+    display: none !important;
+}
+
