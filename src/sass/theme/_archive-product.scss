@@ -36,12 +36,16 @@
 }
 
 .category-banner__desc {
-	font-size: 1rem;
-	max-width: 60ch;
+	font-size: 1.1rem;
+	// max-width: 80ch;
 	opacity: 0.9;
 
+	p:first-of-type {
+		margin-top: 1.5rem;
+	}
+
 	p:last-child {
-		margin-bottom: 0;
+		margin-top: 1rem;
 	}
 }
 
@@ -133,8 +137,9 @@
 }
 
 // ── Suppress WooCommerce's built-in archive header ────────────
-// WC outputs its own category image/description via woocommerce_shop_loop_header.
-// We render our own banner above, so hide the duplicate.
+// WC outputs its own category title/description into .woocommerce-products-header
+// via woocommerce_shop_loop_header (see qc_category_banner() in functions.php,
+// which prints .category-banner as a sibling before this header and hides it).
 .woocommerce-products-header {
 	display: none;
 }

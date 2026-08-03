@@ -311,18 +311,95 @@ function quality_single_product_no_sidebar( $position ) {
 	return $position;
 }
 
-add_action( 'woocommerce_archive_description', 'qc_category_description_under_image', 20 );
+/**
+ * Category banner (background image + title + description) at the top of
+ * product category archive pages.
+ *
+ * WooCommerce's own archive header (.woocommerce-products-header, which
+ * `woocommerce_archive_description` renders into) is hidden via CSS — see
+ * _archive-product.scss — so this hooks into `woocommerce_shop_loop_header`
+ * at priority 5 to print as a sibling *before* that header opens (WC's own
+ * header callback runs at priority 10), rather than inside it.
+ */
+add_action( 'woocommerce_shop_loop_header', 'qc_category_banner', 5 );
 
-function qc_category_description_under_image() {
-    if ( is_product_category() ) {
-        $term = get_queried_object();
-
-        if ( ! empty( $term->description ) ) {
-            echo '<div class="qc-category-description">';
-            echo wpautop( wp_kses_post( $term->description ) );
-            echo '</div>';
-        }
+function qc_category_banner() {
+    if ( ! is_product_category() ) {
+        return;
     }
+
+    $term = get_queried_object();
+    if ( ! ( $term instanceof WP_Term ) ) {
+        return;
+    }
+
+    $thumbnail_id = get_term_meta( $term->term_id, 'thumbnail_id', true );
+    $image_url    = $thumbnail_id ? wp_get_attachment_image_url( $thumbnail_id, 'full' ) : '';
+    $banner_page  = function_exists( 'get_field' ) ? get_field( 'category_banner_page', $term ) : null;
+
+    $classes = 'category-banner';
+    if ( $image_url ) {
+        $classes .= ' category-banner--has-image';
+    }
+
+    printf(
+        '<div class="%1$s"%2$s>',
+        esc_attr( $classes ),
+        $image_url ? ' style="background-image:url(' . esc_url( $image_url ) . ')"' : ''
+    );
+    echo '<div class="container">';
+    echo '<h1 class="category-banner__title">' . esc_html( $term->name ) . '</h1>';
+
+    if ( $banner_page instanceof WP_Post ) {
+        echo '<div class="category-banner__desc">' . apply_filters( 'the_content', $banner_page->post_content ) . '</div>';
+    } elseif ( ! empty( $term->description ) ) {
+        echo '<div class="category-banner__desc">' . wpautop( wp_kses_post( $term->description ) ) . '</div>';
+    }
+
+    echo '</div>';
+    echo '</div>';
+}
+
+/**
+ * "Banner Content Page" ACF field on product category terms — lets a
+ * category banner pull its body copy from a full WordPress Page (Gutenberg
+ * content) instead of the plain-text taxonomy Description field.
+ */
+add_action( 'acf/init', 'qc_register_category_banner_fields' );
+
+function qc_register_category_banner_fields() {
+
+    if ( ! function_exists( 'acf_add_local_field_group' ) ) {
+        return;
+    }
+
+    acf_add_local_field_group(
+        [
+            'key'      => 'group_qc_category_banner',
+            'title'    => 'Category Banner',
+            'fields'   => [
+                [
+                    'key'           => 'field_qc_category_banner_page',
+                    'label'         => 'Banner Content Page',
+                    'name'          => 'category_banner_page',
+                    'type'          => 'post_object',
+                    'instructions'  => 'Optional. A page whose content is shown in the category banner. Falls back to the category Description field when empty.',
+                    'post_type'     => [ 'page' ],
+                    'return_format' => 'object',
+                    'allow_null'    => 1,
+                ],
+            ],
+            'location' => [
+                [
+                    [
+                        'param'    => 'taxonomy',
+                        'operator' => '==',
+                        'value'    => 'product_cat',
+                    ],
+                ],
+            ],
+        ]
+    );
 }
 
 add_action( 'woocommerce_before_subcategory_title', function( $category ) {

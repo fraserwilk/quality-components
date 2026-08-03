@@ -12623,12 +12623,14 @@ body.understrap-no-sidebar .wp-block-cover.alignwide {
 }
 
 .category-banner__desc {
-  font-size: 1rem;
-  max-width: 60ch;
+  font-size: 1.1rem;
   opacity: 0.9;
 }
+.category-banner__desc p:first-of-type {
+  margin-top: 1.5rem;
+}
 .category-banner__desc p:last-child {
-  margin-bottom: 0;
+  margin-top: 1rem;
 }
 
 .category-subcats {
