@@ -301,6 +301,41 @@ function quality_display_loop_sku() {
 
 
 /**
+ * Display the Unique Stock Code on shop/archive product loop cards.
+ * Shows "Stock Code: XXXXX" beneath the SKU line.
+ *
+ * The field itself (postmeta key _qc_stock_code) is registered, validated,
+ * and kept unique by the qc-stock-code plugin — this only reads it.
+ */
+add_action( 'woocommerce_after_shop_loop_item_title', 'quality_display_loop_stock_code', 7 );
+function quality_display_loop_stock_code() {
+	global $product;
+	if ( ! $product ) {
+		return;
+	}
+	$stock_code = get_post_meta( $product->get_id(), '_qc_stock_code', true );
+	if ( $stock_code ) {
+		echo '<div class="product-loop-stock-code">Stock Code: ' . esc_html( $stock_code ) . '</div>';
+	}
+}
+
+/**
+ * Display the Unique Stock Code on the single product page, alongside the
+ * default SKU/categories/tags meta line.
+ */
+add_action( 'woocommerce_product_meta_end', 'quality_display_single_product_stock_code' );
+function quality_display_single_product_stock_code() {
+	global $product;
+	if ( ! $product ) {
+		return;
+	}
+	$stock_code = get_post_meta( $product->get_id(), '_qc_stock_code', true );
+	if ( $stock_code ) {
+		echo '<br><span class="stock_code_wrapper">' . esc_html__( 'Stock Code:', 'understrap' ) . ' <span class="stock_code">' . esc_html( $stock_code ) . '</span></span>';
+	}
+}
+
+/**
  * Remove right sidebar on single product pages.
  */
 add_filter( 'theme_mod_understrap_sidebar_position', 'quality_single_product_no_sidebar' );
