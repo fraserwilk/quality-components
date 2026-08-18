@@ -340,7 +340,7 @@ function quality_display_single_product_stock_code() {
  */
 add_filter( 'theme_mod_understrap_sidebar_position', 'quality_single_product_no_sidebar' );
 function quality_single_product_no_sidebar( $position ) {
-	if ( is_product() ) {
+    if ( function_exists( 'is_product' ) && is_product() ) {
 		return 'none';
 	}
 	return $position;
