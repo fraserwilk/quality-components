@@ -17,6 +17,10 @@ get_header();
 
 $container = get_theme_mod( 'understrap_container_type' );
 
+// Optional page sidebar: shows the "Right Sidebar" widget area next to the
+// content, but only when that widget area actually has widgets.
+$has_sidebar = is_active_sidebar( 'right-sidebar' );
+
 ?>
 
 <div class="wrapper" id="page-wrapper">
@@ -25,7 +29,7 @@ $container = get_theme_mod( 'understrap_container_type' );
 
 		<div class="row">
 
-			<main class="site-main" id="main">
+			<main class="site-main <?php echo $has_sidebar ? 'col-lg-8' : 'col-12'; ?>" id="main">
 
 				<?php
 				while ( have_posts() ) {
@@ -37,6 +41,11 @@ $container = get_theme_mod( 'understrap_container_type' );
 
 			</main>
 
+			<?php if ( $has_sidebar ) : ?>
+				<aside class="col-lg-4 widget-area" id="page-sidebar" role="complementary">
+					<?php dynamic_sidebar( 'right-sidebar' ); ?>
+				</aside>
+			<?php endif; ?>
 
 		</div><!-- .row -->
 

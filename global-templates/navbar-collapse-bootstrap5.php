@@ -63,12 +63,18 @@ $container = get_theme_mod( 'understrap_container_type' );
 				</a>
 			<?php endif; ?>
 			<?php if ( is_user_logged_in() ) : ?>
+				<a href="/my-account/" class="btn btn-light btn-sm custom-btn-apply">
+					My Account
+				</a>
 				<a href="<?php echo esc_url( wp_logout_url( home_url() ) ); ?>" class="btn btn-outline-light btn-sm custom-btn-signin">
 					Sign Out
 				</a>
 			<?php else : ?>
+				<a href="/my-account/" class="btn btn-outline-light btn-sm custom-btn-signin">
+					Dealer Login
+				</a>
 				<a href="/my-account/" class="btn btn-light btn-sm custom-btn-apply">
-					Sign In / Apply
+					Apply for an Account
 				</a>
 			<?php endif; ?>
 		</div>
