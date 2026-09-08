@@ -16,9 +16,13 @@ body {
 	flex-direction: column;
 }
 
-#no-title-page-wrapper {
-    .entry-header { display: none; }
-}      
+#no-title-page-wrapper.wrapper {
+    padding: 0;
+}
+
+#no-title-page-wrapper .entry-header {
+    display: none;
+}   
 
 #full-width-page-wrapper {
 	flex: 1;

@@ -11195,6 +11195,10 @@ body {
   flex-direction: column;
 }
 
+#no-title-page-wrapper.wrapper {
+  padding: 0;
+}
+
 #no-title-page-wrapper .entry-header {
   display: none;
 }
