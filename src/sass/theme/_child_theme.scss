@@ -58,8 +58,11 @@ ul#main-menu li a {
     margin-left: calc(50% - 50vw) !important;
     margin-right: calc(50% - 50vw) !important;
 	margin-bottom: 1rem;
-    text-align: center;
-    color: #fff;
+
+
+#hero-h1 {
+	font-size: clamp(2rem, 1rem + 3.2vw, 3rem);
+}
 
     h2 {
     font-size: clamp(2.5rem, 0.165rem + 3.8307vw, 3.625rem);;
@@ -196,48 +199,3 @@ ul#main-menu li a {
 	box-sizing: border-box;
 }
 
-// Cart icon header hover
-.cart-icon-header {
-	opacity: 0.85;
-	transition: opacity 0.2s ease;
-
-	&:hover {
-		opacity: 1;
-
-		i {
-			--fa-primary-color: rgb(255, 132, 0);
-		}
-	}
-}
-
-// Keep Cart Block product specifications readable without stacking every value
-// beneath its label on narrow layouts.
-.wp-block-woocommerce-cart .wc-block-components-product-details {
-	display: grid;
-	row-gap: 0.15rem;
-
-	> span {
-		display: grid;
-		grid-template-columns: minmax(9rem, 42%) minmax(0, 1fr);
-		column-gap: 0.5rem;
-		align-items: start;
-
-		> [aria-hidden="true"] {
-			display: none;
-		}
-	}
-
-	&__name,
-	&__value {
-		display: block;
-		min-width: 0;
-		word-break: normal;
-		overflow-wrap: normal;
-	}
-}
-
-@media (max-width: 479.98px) {
-	.wp-block-woocommerce-cart .wc-block-components-product-details > span {
-		grid-template-columns: minmax(7.5rem, 42%) minmax(0, 1fr);
-	}
-}

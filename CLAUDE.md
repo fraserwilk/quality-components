@@ -118,4 +118,6 @@ Custom components use the `ltwoo-` prefix (e.g. `ltwoo-product`, `ltwoo-tab`).
 
 PHP code must comply with **WordPress Coding Standards** (`phpcs.xml.dist`). The text domains in use are `understrap` and `woocommerce`. PHPStan runs at `max` level; its scope is configured in `phpstan.neon.dist` (currently `inc/` — which is empty; add PHP files there when PHPStan analysis is needed, or expand paths in `phpstan.neon.dist`). PHPStan uses `src/phpstan/autoload.php` as its bootstrap. PHPMD excludes WooCommerce templates, all `*-templates/` directories (global, loop, page), and `src/`. Both PHPStan and PHPMD have baseline files (`phpstan-baseline.neon`, `phpmd.baseline.xml`) for suppressing pre-existing issues.
 
+It's 2026. Prefer native platform features over packages. Safe without polyfills: container queries, :has(), field-sizing, contrast-color(), anchor positioning. Never install: Floating UI, Popper.js, textarea-autosize, element-resize-observer wrappers.
+
 There are no automated tests. Quality assurance is entirely through the static analysis and linting tools above.
