@@ -655,6 +655,33 @@ function ltwoo_register_landing_page_fields() {
     );
 }
 
+function qc_register_dealer_economics_block() {
+	if ( function_exists( 'acf_register_block_type' ) ) {
+		acf_register_block_type( array(
+			'name'            => 'dealer-economics',
+			'title'           => __( 'Dealer Economics Panel' ),
+			'description'     => __( 'Four-card dealer economics panel with margin-sample email gate.' ),
+			'render_template'  => 'template-parts/dealer-economics.php',
+			'category'        => 'formatting',
+			'icon'            => 'chart-bar',
+			'keywords'        => array( 'dealer', 'margin', 'economics' ),
+			'mode'            => 'preview', // shows live rendered output in the editor
+		) );
+	}
+}
+add_action( 'acf/init', 'qc_register_dealer_economics_block' );
+
+/** Allow styles to also be viewed in backend */
+function qc_dealer_economics_editor_assets() {
+	wp_enqueue_style(
+		'qc-dealer-economics-editor',
+        get_stylesheet_directory_uri() . '/css/child-theme.css', // or compiled theme.css if bundled
+		array(),
+		filemtime( get_stylesheet_directory() . '/css/child-theme.css' )
+	);
+}
+add_action( 'enqueue_block_editor_assets', 'qc_dealer_economics_editor_assets' );
+
 /**
  * Rank Math falls back to a raw, unsanitized get_the_excerpt() for the og/twitter
  * description whenever its own description resolves empty (no manual SEO description,

@@ -58,7 +58,7 @@ ul#main-menu li a {
     margin-left: calc(50% - 50vw) !important;
     margin-right: calc(50% - 50vw) !important;
 	margin-bottom: 1rem;
-
+	padding-top: 4rem;
 
 #hero-h1 {
 	font-size: clamp(2rem, 1rem + 3.2vw, 3rem);
@@ -116,18 +116,18 @@ ul#main-menu li a {
 	color: $orange;
 }
 
-// Dealer Benefits banner — increase height via padding
-#dealer-benefits {
-	padding-top: 3rem;
-	padding-bottom: 3rem;
-	margin-block: 3rem;
+// Which L-TWOO custom HTML block — centre content vertically & horizontally
+.which-ltwoo {
+	margin-top: 4rem;
+	margin-bottom: 4rem;
 
-	h2 {
-    font-size: clamp(3.5rem, 0.165rem + 7.8307vw, 6.625rem);;
-    line-height: 1.1;
-    font-weight: 700;
-    text-transform: uppercase;
-    }
+	.wp-block-columns {
+		align-items: center;
+
+		.wp-block-column {
+			text-align: center;
+		}
+	}
 }
 
 // Flat rate shipping / features columns — centre content vertically & horizontally

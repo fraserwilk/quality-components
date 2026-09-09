@@ -3,7 +3,7 @@
     --ltwoo-dark: #202020;
     --ltwoo-charcoal: #2c2c2c;
     --ltwoo-light: #f4f4f1;
-    --ltwoo-border: #deded9;
+    // --ltwoo-border: #deded9;
     --ltwoo-muted: #686868;
 }
 
@@ -56,13 +56,19 @@
 
 .ltwoo-card {
     height: 100%;
-    padding: clamp(1.5rem, 3vw, 2.25rem);
+    padding: clamp(1.125rem, 2vw, 1.7rem);
     background: #fff;
-    border: 1px solid var(--ltwoo-border);
+    border: 1px solid $border-color;
     transition:
         transform 180ms ease,
         box-shadow 180ms ease,
         border-color 180ms ease;
+    
+    p {
+        font-size: 1rem;
+        line-height: 1.5;
+        color: $gray-700;
+    }
 }
 
 .ltwoo-card:hover {
@@ -73,12 +79,31 @@
 
 .ltwoo-card h2,
 .ltwoo-card h3 {
-    font-weight: 700;
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
 }
 
 .ltwoo-card p {
     color: var(--ltwoo-muted);
 }
+
+.ltwoo-icon {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 40px;
+		height: 40px;
+		border-radius: 50%;
+		background: rgba($orange, 0.1);
+		color: $orange;
+		margin-bottom: 0.75rem;
+
+		svg {
+			width: 20px;
+			height: 20px;
+		}
+	}
 
 .ltwoo-dark-section {
     padding-top: clamp(3rem, 7vw, 6rem);
