@@ -12870,6 +12870,47 @@ body.understrap-no-sidebar .wp-block-cover.alignwide {
     transition: none;
   }
 }
+.ltwoo-comparison-table {
+  overflow-x: auto;
+  margin: 4rem 0 !important;
+}
+.ltwoo-comparison-table table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+.ltwoo-comparison-table h3, .ltwoo-comparison-table .h3 {
+  caption-side: top;
+  text-align: left;
+  font-weight: 600;
+  font-size: 1.7rem;
+  margin-bottom: 0.75em;
+}
+.ltwoo-comparison-table th,
+.ltwoo-comparison-table td {
+  padding: 0.75em 1em;
+  border: 1px solid #e0e0e0;
+  text-align: left;
+  vertical-align: top;
+}
+.ltwoo-comparison-table thead th {
+  background-color: #BA7517;
+  color: #ffffff;
+  font-weight: 600;
+}
+.ltwoo-comparison-table tbody th {
+  background-color: #f7f7f7;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.ltwoo-comparison-table tbody tr:nth-child(even) td {
+  background-color: #fafafa;
+}
+.ltwoo-comparison-table td:last-child {
+  font-weight: 600;
+  color: #BA7517;
+}
+
 .home .qc-range-section {
   width: min(100%, 1320px);
   margin-inline: auto;

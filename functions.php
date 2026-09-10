@@ -682,6 +682,69 @@ function qc_dealer_economics_editor_assets() {
 }
 add_action( 'enqueue_block_editor_assets', 'qc_dealer_economics_editor_assets' );
 
+
+/**
+ * LTWOO comparison table shortcode.
+ * Usage: [ltwoo_comparison_table]
+ */
+function ltwoo_comparison_table_shortcode() {
+	ob_start();
+	?>
+	<div class="ltwoo-comparison-table">
+		<table>
+			<h3>Mainstream vs. L-TWOO</h3>
+			<thead>
+				<tr>
+					<th scope="col">&nbsp;</th>
+					<th scope="col">Mainstream Option</th>
+					<th scope="col">L-TWOO Option</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<th scope="row">Rider entry price</th>
+					<td>Higher</td>
+					<td>More accessible</td>
+				</tr>
+				<tr>
+					<th scope="row">Electronic and mechanical options</th>
+					<td>Yes</td>
+					<td>Yes</td>
+				</tr>
+				<tr>
+					<th scope="row">Australian stock?</th>
+					<td>Varies</td>
+					<td>Yes</td>
+				</tr>
+				<tr>
+					<th scope="row">Local distributor support</th>
+					<td>Varies</td>
+					<td>Yes</td>
+				</tr>
+				<tr>
+					<th scope="row">Dealer pricing</th>
+					<td>Account dependent</td>
+					<td>Available to approved dealers</td>
+				</tr>
+				<tr>
+					<th scope="row">Replacement parts</th>
+					<td>Brand dependent</td>
+					<td>All spares available</td>
+				</tr>
+				<tr>
+					<th scope="row">Account with no shopfront</th>
+					<td>No</td>
+					<td>Yes</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<?php
+	return ob_get_clean();
+}
+add_shortcode( 'ltwoo_comparison_table', 'ltwoo_comparison_table_shortcode' );
+
+
 /**
  * Rank Math falls back to a raw, unsanitized get_the_excerpt() for the og/twitter
  * description whenever its own description resolves empty (no manual SEO description,
