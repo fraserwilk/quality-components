@@ -969,3 +969,35 @@ function quality_exclude_cart_js_from_litespeed( $excludes ) {
 	$excludes[] = 'woocommerce';
 	return $excludes;
 }
+
+
+/**
+ * Load the front-page hero image eagerly, with high fetch priority.
+ *
+ * The hero image sits above the fold and is the Largest Contentful Paint
+ * element, so it must not be lazy loaded. The `skip-lazy` class keeps
+ * LiteSpeed Cache from swapping the src for its lazy-load placeholder
+ * (the loader always honours that class), and `fetchpriority="high"`
+ * tells the browser to start this request first.
+ *
+ * The image block renders dynamically, so the attributes are applied to
+ * the rendered markup rather than saved in the block content.
+ */
+add_filter( 'render_block_core/column', 'qc_hero_image_priority', 10, 2 );
+function qc_hero_image_priority( $block_content, $block ) {
+	if ( empty( $block['attrs']['className'] ) || false === strpos( $block['attrs']['className'], 'hero-column' ) ) {
+		return $block_content;
+	}
+
+	$processor = new WP_HTML_Tag_Processor( $block_content );
+
+	if ( ! $processor->next_tag( array( 'tag_name' => 'IMG' ) ) ) {
+		return $block_content;
+	}
+
+	$processor->set_attribute( 'loading', 'eager' );
+	$processor->set_attribute( 'fetchpriority', 'high' );
+	$processor->add_class( 'skip-lazy' );
+
+	return $processor->get_updated_html();
+}

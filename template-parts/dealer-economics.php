@@ -26,9 +26,9 @@ $dispatch_label = ( $dispatch_speed === 'next-day' ) ? 'next' : 'same';
 					</span>
 					<h3>More room in the sale</h3>
 					<p>
-						Dealer pricing built for margin — typically
-						<strong><?php echo esc_html( $margin_min ); ?>–<?php echo esc_html( $margin_max ); ?>%</strong>
-						below RRP — while riders still get a lower-cost drivetrain option.
+						Dealer pricing built for profit - typically
+						<strong><?php echo esc_html( $margin_min ); ?>-<?php echo esc_html( $margin_max ); ?>%</strong>
+						gross margin - while riders still get a lower-cost drivetrain option.
 					</p>
 				</div>
 			</div>
@@ -41,7 +41,7 @@ $dispatch_label = ( $dispatch_speed === 'next-day' ) ? 'next' : 'same';
 					<h3>Stock held in Australia</h3>
 					<p>
 						<strong><?php echo esc_html( $stock_percent ); ?>%</strong>
-						of SKUs in stock now — see live status before you order, no overseas shipping wait.
+						of top selling dealer lines in stock now — see live status before you order, no overseas shipping wait.
 					</p>
 				</div>
 			</div>
