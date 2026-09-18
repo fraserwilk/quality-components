@@ -1,5 +1,5 @@
 // ...existing code...
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito Sans:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap');
 
 @import "theme/child_theme_variables";                   // <------- Add your variables into this file. Also add variables to overwrite Bootstrap variables here
 @import "assets/bootstrap5/bootstrap";                             // <------- Loads Bootstrap5
@@ -19,4 +19,11 @@
 @import "theme/single-product";                      // <------- Custom single product styles for this child theme
 @import "theme/shop-filters";                        // <------- Shop filter sidebar styles
 @import "theme/archive-product";                     // <------- Category archive banner + subcategory tiles
+@import "theme/hero";                              // <------- Hero section styles
 @import "theme/trust-bar";                          // <------- Trust bar styles
+@import "theme/dealer-proof";                       // <------- Homepage dealer proof stack
+@import "theme/ltwoo-comparison-table";                  // <------- LTWOO comparison table styles
+@import "theme/range-cards";                        // <------- Homepage product-range cards
+@import "theme/ltwoo";                              // <------- Custom styles for the LTWOO landing page
+@import "theme/cart-filters";                          // <------- Custom styles for the cart/checkout filters
+@import "theme/dealer-economics";                          // <------- Custom styles for the dealer economics page

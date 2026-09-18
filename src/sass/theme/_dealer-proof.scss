@@ -1,0 +1,288 @@
+// Homepage dealer proof stack.
+.home .qc-proof-stack {
+	margin-bottom: clamp(3rem, 6vw, 5rem);
+	padding: clamp(2rem, 5vw, 4rem);
+	background: $light;
+	border: 1px solid rgba($dark, 0.1);
+	border-radius: $border-radius;
+
+	> .wp-block-group__inner-container {
+		display: grid;
+		gap: clamp(1.5rem, 3vw, 2.5rem);
+	}
+
+	.qc-proof__eyebrow {
+		margin-bottom: 0.65rem;
+		color: $orange;
+		font-size: 0.78rem;
+		font-weight: 700;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+	}
+
+	.qc-proof__intro {
+		max-width: 52rem;
+
+		h2 {
+			margin-bottom: 0.75rem;
+			font-size: clamp(2rem, 4vw, 3.5rem);
+			font-weight: 700;
+			letter-spacing: -0.04em;
+			line-height: 1.05;
+		}
+
+		p:last-child {
+			max-width: 43rem;
+			margin-bottom: 0;
+			color: $gray-700;
+			font-size: 1.05rem;
+		}
+	}
+
+	.qc-proof__logo-list {
+		display: flex;
+		align-items: center;
+		gap: 1.25rem;
+		padding: 1rem 1.25rem;
+		background: $white;
+		border: 1px solid rgba($dark, 0.1);
+
+		> p {
+			margin: 0;
+			color: $gray-600;
+			font-size: 0.78rem;
+			font-weight: 700;
+			letter-spacing: 0.08em;
+			text-transform: uppercase;
+		}
+
+		figure {
+			margin: 0;
+		}
+
+		img {
+			display: block;
+			width: auto;
+			max-width: 11rem;
+			height: 3.5rem;
+			object-fit: contain;
+		}
+	}
+
+	.qc-proof__feature {
+		display: grid;
+		grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+		gap: 0;
+		margin: 0;
+		background: $dark;
+		box-shadow: 0 1rem 2.5rem rgba($dark, 0.14);
+
+		.wp-block-column {
+			min-width: 0;
+		}
+	}
+
+	.qc-proof__photo {
+		height: 100%;
+		margin: 0;
+
+		img {
+			display: block;
+			width: 100%;
+			height: 100%;
+			min-height: 28rem;
+			object-fit: cover;
+			object-position: center;
+		}
+	}
+
+	.qc-proof__story {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		padding: clamp(2rem, 4vw, 3.5rem);
+		color: $white;
+
+		&::before {
+			position: absolute;
+			top: 1rem;
+			right: clamp(1.5rem, 3vw, 2.5rem);
+			color: rgba($orange, 0.55);
+			content: "\201C";
+			font-family: Georgia, serif;
+			font-size: clamp(5rem, 9vw, 8rem);
+			line-height: 1;
+		}
+	}
+
+	.qc-proof__quote {
+		position: relative;
+		z-index: 1;
+		margin: 0;
+		padding: 0;
+		border: 0;
+
+		p {
+			margin-bottom: 1.5rem;
+			font-size: clamp(1.25rem, 2.2vw, 1.75rem);
+			font-weight: 500;
+			line-height: 1.45;
+		}
+
+		cite {
+			display: block;
+			color: rgba($white, 0.72);
+			font-size: 0.95rem;
+			font-style: normal;
+			line-height: 1.5;
+
+			strong {
+				color: $white;
+				font-size: 1.05rem;
+			}
+		}
+	}
+
+	.qc-proof__result {
+		margin-top: 2rem;
+		padding: 1rem 1.1rem;
+		background: rgba($white, 0.08);
+		border-left: 0.25rem solid $orange;
+
+		p {
+			margin: 0;
+		}
+
+		p:first-child {
+			margin-bottom: 0.35rem;
+			color: $orange;
+			font-size: 0.75rem;
+			font-weight: 700;
+			letter-spacing: 0.09em;
+			text-transform: uppercase;
+		}
+	}
+
+	.qc-proof__facts-heading {
+		display: flex;
+		align-items: flex-end;
+		justify-content: space-between;
+		gap: 1rem;
+
+		h3,
+		p {
+			margin: 0;
+		}
+
+		h3 {
+			font-size: clamp(1.5rem, 2.4vw, 2rem);
+			font-weight: 700;
+		}
+
+		p {
+			color: $gray-600;
+			font-size: 0.9rem;
+		}
+	}
+
+	.qc-proof__facts {
+		display: grid;
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+		gap: 1rem;
+	}
+
+	.qc-proof__fact {
+		padding: 1.15rem;
+		background: $white;
+		border: 1px solid rgba($dark, 0.1);
+		border-top: 0.2rem solid $orange;
+
+		summary {
+			position: relative;
+			display: grid;
+			gap: 0.25rem;
+			padding-right: 1.5rem;
+			cursor: pointer;
+			list-style: none;
+
+			&::-webkit-details-marker {
+				display: none;
+			}
+
+			&::after {
+				position: absolute;
+				top: 0;
+				right: 0;
+				color: $orange;
+				content: "+";
+				font-size: 1.35rem;
+				font-weight: 700;
+				line-height: 1;
+			}
+
+			strong {
+				color: $dark;
+				font-size: clamp(1.35rem, 2.5vw, 1.8rem);
+				line-height: 1.1;
+			}
+
+			span {
+				color: $gray-700;
+				font-size: 0.9rem;
+				font-weight: 600;
+				line-height: 1.35;
+			}
+		}
+
+		p {
+			margin: 0.9rem 0 0;
+			padding-top: 0.9rem;
+			border-top: 1px solid rgba($dark, 0.1);
+			color: $gray-700;
+			font-size: 0.85rem;
+			line-height: 1.5;
+		}
+
+		&[open] summary::after {
+			content: "\2212";
+		}
+	}
+}
+
+@media (max-width: 991px) {
+	.home .qc-proof-stack {
+		.qc-proof__feature {
+			grid-template-columns: 1fr;
+		}
+
+		.qc-proof__photo img {
+			min-height: 22rem;
+			max-height: 32rem;
+		}
+
+		.qc-proof__facts {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+	}
+}
+
+@media (max-width: 600px) {
+	.home .qc-proof-stack {
+		padding: 1.5rem;
+
+		.qc-proof__logo-list,
+		.qc-proof__facts-heading {
+			align-items: flex-start;
+			flex-direction: column;
+		}
+
+		.qc-proof__facts {
+			grid-template-columns: 1fr;
+		}
+
+		.qc-proof__photo img {
+			min-height: 18rem;
+		}
+	}
+}

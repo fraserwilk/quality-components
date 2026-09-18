@@ -1,0 +1,18 @@
+.qc-dealer-benefits {
+	background-color: $gray-100;
+	padding: 3rem 0;
+}
+
+.qc-dealer-economics {
+	padding: 3rem 0;
+
+// cards use ltwoo-card class from _ltwoo.scss
+
+	.qc-margin-gate {
+		margin-top: 2rem;
+		border: 1px dashed $orange;
+		border-radius: $border-radius;
+		padding: 1.5rem;
+		text-align: center;
+	}
+}

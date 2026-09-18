@@ -45,7 +45,7 @@ function theme_enqueue_styles() {
 	
 	$js_version = $theme_version . '.' . filemtime( get_stylesheet_directory() . $theme_scripts );
 	
-	wp_enqueue_script( 'child-understrap-scripts', get_stylesheet_directory_uri() . $theme_scripts, array(), $js_version, true );
+	wp_enqueue_script( 'child-understrap-scripts', get_stylesheet_directory_uri() . $theme_scripts, array( 'jquery' ), $js_version, true );
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
 	}
@@ -92,13 +92,6 @@ function understrap_child_customize_controls_js() {
 	);
 }
 add_action( 'customize_controls_enqueue_scripts', 'understrap_child_customize_controls_js' );
-
-// Allow SVG
-function allow_svg_uploads($mimes) {
-    $mimes['svg'] = 'image/svg+xml';
-    return $mimes;
-}
-add_filter('upload_mimes', 'allow_svg_uploads');
 
 // Show button variants in the block “Styles” panel
 add_action( 'init', function () {
@@ -196,17 +189,36 @@ if ( ! function_exists( 'ltwoo_spec_label_from_key' ) ) {
 
 
 /**
- * Load Font Awesome Pro via kit
+ * Font Awesome Kit Setup
+ *
+ * This will add your Font Awesome Kit to the front-end, the admin back-end,
+ * and the login screen area.
  */
-add_action( 'wp_enqueue_scripts', function() {
-	wp_enqueue_script( 'font-awesome-pro', 'https://kit.fontawesome.com/2e83392d18.js', [], null, false );
-	add_filter( 'script_loader_tag', function( $tag, $handle ) {
-		if ( 'font-awesome-pro' === $handle ) {
-			return str_replace( '<script ', '<script crossorigin="anonymous" ', $tag );
-		}
-		return $tag;
-	}, 10, 2 );
-} );
+if (! function_exists('fa_custom_setup_kit') ) {
+  function fa_custom_setup_kit($kit_url = '') {
+    // The CSS build of the same kit is what actually renders inside the block
+    // editor's iframed canvas (only stylesheets get mirrored in there, not scripts).
+    $kit_css_url = preg_replace('/\.js$/', '.css', $kit_url);
+
+    foreach ( [ 'wp_enqueue_scripts', 'admin_enqueue_scripts', 'login_enqueue_scripts', 'enqueue_block_assets' ] as $action ) {
+      add_action(
+        $action,
+        function () use ( $kit_url, $kit_css_url ) {
+          wp_enqueue_script( 'font-awesome-kit', $kit_url, [], null );
+          wp_enqueue_style( 'font-awesome-kit-css', $kit_css_url, [], null );
+        }
+      );
+    }
+  }
+}
+fa_custom_setup_kit('https://kit.fontawesome.com/f84f17191f.js');
+
+add_filter( 'script_loader_tag', function( $tag, $handle ) {
+	if ( 'font-awesome-kit' === $handle ) {
+		return str_replace( '<script ', '<script crossorigin="anonymous" ', $tag );
+	}
+	return $tag;
+}, 10, 2 );
 
 
 /**
@@ -289,6 +301,41 @@ function quality_display_loop_sku() {
 
 
 /**
+ * Display the Unique Stock Code on shop/archive product loop cards.
+ * Shows "Stock Code: XXXXX" beneath the SKU line.
+ *
+ * The field itself (postmeta key _qc_stock_code) is registered, validated,
+ * and kept unique by the qc-stock-code plugin — this only reads it.
+ */
+add_action( 'woocommerce_after_shop_loop_item_title', 'quality_display_loop_stock_code', 7 );
+function quality_display_loop_stock_code() {
+	global $product;
+	if ( ! $product ) {
+		return;
+	}
+	$stock_code = get_post_meta( $product->get_id(), '_qc_stock_code', true );
+	if ( $stock_code ) {
+		echo '<div class="product-loop-stock-code">Stock Code: ' . esc_html( $stock_code ) . '</div>';
+	}
+}
+
+/**
+ * Display the Unique Stock Code on the single product page, alongside the
+ * default SKU/categories/tags meta line.
+ */
+add_action( 'woocommerce_product_meta_end', 'quality_display_single_product_stock_code' );
+function quality_display_single_product_stock_code() {
+	global $product;
+	if ( ! $product ) {
+		return;
+	}
+	$stock_code = get_post_meta( $product->get_id(), '_qc_stock_code', true );
+	if ( $stock_code ) {
+		echo '<br><span class="stock_code_wrapper">' . esc_html__( 'Stock Code:', 'understrap' ) . ' <span class="stock_code">' . esc_html( $stock_code ) . '</span></span>';
+	}
+}
+
+/**
  * Remove right sidebar on single product pages.
  */
 add_filter( 'theme_mod_understrap_sidebar_position', 'quality_single_product_no_sidebar' );
@@ -299,18 +346,95 @@ function quality_single_product_no_sidebar( $position ) {
 	return $position;
 }
 
-add_action( 'woocommerce_archive_description', 'qc_category_description_under_image', 20 );
+/**
+ * Category banner (background image + title + description) at the top of
+ * product category archive pages.
+ *
+ * WooCommerce's own archive header (.woocommerce-products-header, which
+ * `woocommerce_archive_description` renders into) is hidden via CSS — see
+ * _archive-product.scss — so this hooks into `woocommerce_shop_loop_header`
+ * at priority 5 to print as a sibling *before* that header opens (WC's own
+ * header callback runs at priority 10), rather than inside it.
+ */
+add_action( 'woocommerce_shop_loop_header', 'qc_category_banner', 5 );
 
-function qc_category_description_under_image() {
-    if ( is_product_category() ) {
-        $term = get_queried_object();
-
-        if ( ! empty( $term->description ) ) {
-            echo '<div class="qc-category-description">';
-            echo wpautop( wp_kses_post( $term->description ) );
-            echo '</div>';
-        }
+function qc_category_banner() {
+    if ( ! is_product_category() ) {
+        return;
     }
+
+    $term = get_queried_object();
+    if ( ! ( $term instanceof WP_Term ) ) {
+        return;
+    }
+
+    $thumbnail_id = get_term_meta( $term->term_id, 'thumbnail_id', true );
+    $image_url    = $thumbnail_id ? wp_get_attachment_image_url( $thumbnail_id, 'full' ) : '';
+    $banner_page  = function_exists( 'get_field' ) ? get_field( 'category_banner_page', $term ) : null;
+
+    $classes = 'category-banner';
+    if ( $image_url ) {
+        $classes .= ' category-banner--has-image';
+    }
+
+    printf(
+        '<div class="%1$s"%2$s>',
+        esc_attr( $classes ),
+        $image_url ? ' style="background-image:url(' . esc_url( $image_url ) . ')"' : ''
+    );
+    echo '<div class="container">';
+    echo '<h1 class="category-banner__title">' . esc_html( $term->name ) . '</h1>';
+
+    if ( $banner_page instanceof WP_Post ) {
+        echo '<div class="category-banner__desc">' . apply_filters( 'the_content', $banner_page->post_content ) . '</div>';
+    } elseif ( ! empty( $term->description ) ) {
+        echo '<div class="category-banner__desc">' . wpautop( wp_kses_post( $term->description ) ) . '</div>';
+    }
+
+    echo '</div>';
+    echo '</div>';
+}
+
+/**
+ * "Banner Content Page" ACF field on product category terms — lets a
+ * category banner pull its body copy from a full WordPress Page (Gutenberg
+ * content) instead of the plain-text taxonomy Description field.
+ */
+add_action( 'acf/init', 'qc_register_category_banner_fields' );
+
+function qc_register_category_banner_fields() {
+
+    if ( ! function_exists( 'acf_add_local_field_group' ) ) {
+        return;
+    }
+
+    acf_add_local_field_group(
+        [
+            'key'      => 'group_qc_category_banner',
+            'title'    => 'Category Banner',
+            'fields'   => [
+                [
+                    'key'           => 'field_qc_category_banner_page',
+                    'label'         => 'Banner Content Page',
+                    'name'          => 'category_banner_page',
+                    'type'          => 'post_object',
+                    'instructions'  => 'Optional. A page whose content is shown in the category banner. Falls back to the category Description field when empty.',
+                    'post_type'     => [ 'page' ],
+                    'return_format' => 'object',
+                    'allow_null'    => 1,
+                ],
+            ],
+            'location' => [
+                [
+                    [
+                        'param'    => 'taxonomy',
+                        'operator' => '==',
+                        'value'    => 'product_cat',
+                    ],
+                ],
+            ],
+        ]
+    );
 }
 
 add_action( 'woocommerce_before_subcategory_title', function( $category ) {
@@ -375,4 +499,505 @@ function qc_insert_products_separator_before_first_product() {
     }
 
     echo '<li class="qc-products-separator"><span>Products</span></li>';
+}
+
+/**
+ * Register ACF fields for the L-TWOO landing page template.
+ */
+add_action( 'acf/init', 'ltwoo_register_landing_page_fields' );
+function ltwoo_register_landing_page_fields() {
+
+    if ( ! function_exists( 'acf_add_local_field_group' ) ) {
+        return;
+    }
+
+    acf_add_local_field_group(
+        [
+            'key'      => 'group_ltwoo_landing_page',
+            'title'    => 'L-TWOO Landing Page',
+            'fields'   => [
+                [
+                    'key'   => 'field_ltwoo_hero_eyebrow',
+                    'label' => 'Hero Eyebrow',
+                    'name'  => 'hero_eyebrow',
+                    'type'  => 'text',
+                ],
+                [
+                    'key'   => 'field_ltwoo_hero_heading',
+                    'label' => 'Hero Heading',
+                    'name'  => 'hero_heading',
+                    'type'  => 'text',
+                ],
+                [
+                    'key'   => 'field_ltwoo_hero_text',
+                    'label' => 'Hero Text',
+                    'name'  => 'hero_text',
+                    'type'  => 'textarea',
+                ],
+                [
+                    'key'   => 'field_ltwoo_hero_primary_label',
+                    'label' => 'Hero Primary Button Label',
+                    'name'  => 'hero_primary_label',
+                    'type'  => 'text',
+                ],
+                [
+                    'key'   => 'field_ltwoo_hero_primary_url',
+                    'label' => 'Hero Primary Button URL',
+                    'name'  => 'hero_primary_url',
+                    'type'  => 'text',
+                ],
+                [
+                    'key'   => 'field_ltwoo_hero_secondary_label',
+                    'label' => 'Hero Secondary Button Label',
+                    'name'  => 'hero_secondary_label',
+                    'type'  => 'text',
+                ],
+                [
+                    'key'   => 'field_ltwoo_hero_secondary_url',
+                    'label' => 'Hero Secondary Button URL',
+                    'name'  => 'hero_secondary_url',
+                    'type'  => 'text',
+                ],
+                [
+                    'key'           => 'field_ltwoo_hero_bg_image',
+                    'label'         => 'Hero Background Image',
+                    'name'          => 'hero_bg_image',
+                    'type'          => 'image',
+                    'return_format' => 'url',
+                ],
+                [
+                    'key'          => 'field_ltwoo_cards',
+                    'label'        => 'Feature Cards',
+                    'name'         => 'cards',
+                    'type'         => 'repeater',
+                    'layout'       => 'block',
+                    'button_label' => 'Add Card',
+                    'sub_fields'   => [
+                        [
+                            'key'   => 'field_ltwoo_card_title',
+                            'label' => 'Title',
+                            'name'  => 'title',
+                            'type'  => 'text',
+                        ],
+                        [
+                            'key'   => 'field_ltwoo_card_text',
+                            'label' => 'Text',
+                            'name'  => 'text',
+                            'type'  => 'textarea',
+                        ],
+                    ],
+                ],
+                [
+                    'key'   => 'field_ltwoo_cta_eyebrow',
+                    'label' => 'CTA Section Eyebrow',
+                    'name'  => 'cta_eyebrow',
+                    'type'  => 'text',
+                ],
+                [
+                    'key'   => 'field_ltwoo_cta_heading',
+                    'label' => 'CTA Section Heading',
+                    'name'  => 'cta_heading',
+                    'type'  => 'text',
+                ],
+                [
+                    'key'   => 'field_ltwoo_cta_text',
+                    'label' => 'CTA Section Text',
+                    'name'  => 'cta_text',
+                    'type'  => 'textarea',
+                ],
+                [
+                    'key'   => 'field_ltwoo_cta_button_label',
+                    'label' => 'CTA Button Label',
+                    'name'  => 'cta_button_label',
+                    'type'  => 'text',
+                ],
+                [
+                    'key'   => 'field_ltwoo_cta_button_url',
+                    'label' => 'CTA Button URL',
+                    'name'  => 'cta_button_url',
+                    'type'  => 'text',
+                ],
+                [
+                    'key'   => 'field_ltwoo_contact_heading',
+                    'label' => 'Contact Panel Heading',
+                    'name'  => 'contact_heading',
+                    'type'  => 'text',
+                ],
+                [
+                    'key'   => 'field_ltwoo_contact_text',
+                    'label' => 'Contact Panel Text',
+                    'name'  => 'contact_text',
+                    'type'  => 'textarea',
+                ],
+                [
+                    'key'   => 'field_ltwoo_contact_button_label',
+                    'label' => 'Contact Button Label',
+                    'name'  => 'contact_button_label',
+                    'type'  => 'text',
+                ],
+                [
+                    'key'   => 'field_ltwoo_contact_button_url',
+                    'label' => 'Contact Button URL',
+                    'name'  => 'contact_button_url',
+                    'type'  => 'text',
+                ],
+            ],
+            'location' => [
+                [
+                    [
+                        'param'    => 'page_template',
+                        'operator' => '==',
+                        'value'    => 'page-templates/page-ltwoo.php',
+                    ],
+                ],
+            ],
+        ]
+    );
+}
+
+function qc_register_dealer_economics_block() {
+	if ( function_exists( 'acf_register_block_type' ) ) {
+		acf_register_block_type( array(
+			'name'            => 'dealer-economics',
+			'title'           => __( 'Dealer Economics Panel' ),
+			'description'     => __( 'Four-card dealer economics panel with margin-sample email gate.' ),
+			'render_template'  => 'template-parts/dealer-economics.php',
+			'category'        => 'formatting',
+			'icon'            => 'chart-bar',
+			'keywords'        => array( 'dealer', 'margin', 'economics' ),
+			'mode'            => 'preview', // shows live rendered output in the editor
+		) );
+	}
+}
+add_action( 'acf/init', 'qc_register_dealer_economics_block' );
+
+/** Allow styles to also be viewed in backend */
+function qc_dealer_economics_editor_assets() {
+	wp_enqueue_style(
+		'qc-dealer-economics-editor',
+        get_stylesheet_directory_uri() . '/css/child-theme.css', // or compiled theme.css if bundled
+		array(),
+		filemtime( get_stylesheet_directory() . '/css/child-theme.css' )
+	);
+}
+add_action( 'enqueue_block_editor_assets', 'qc_dealer_economics_editor_assets' );
+
+
+/**
+ * LTWOO comparison table shortcode.
+ * Usage: [ltwoo_comparison_table]
+ */
+function ltwoo_comparison_table_shortcode() {
+	ob_start();
+	?>
+	<div class="ltwoo-comparison-table">
+		<table>
+			<h3>Mainstream vs. L-TWOO</h3>
+			<thead>
+				<tr>
+					<th scope="col">&nbsp;</th>
+					<th scope="col">Mainstream Option</th>
+					<th scope="col">L-TWOO Option</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<th scope="row">Rider entry price</th>
+					<td>Higher</td>
+					<td>More accessible</td>
+				</tr>
+				<tr>
+					<th scope="row">Electronic and mechanical options</th>
+					<td>Yes</td>
+					<td>Yes</td>
+				</tr>
+				<tr>
+					<th scope="row">Australian stock?</th>
+					<td>Varies</td>
+					<td>Yes</td>
+				</tr>
+				<tr>
+					<th scope="row">Local distributor support</th>
+					<td>Varies</td>
+					<td>Yes</td>
+				</tr>
+				<tr>
+					<th scope="row">Dealer pricing</th>
+					<td>Account dependent</td>
+					<td>Available to approved dealers</td>
+				</tr>
+				<tr>
+					<th scope="row">Replacement parts</th>
+					<td>Brand dependent</td>
+					<td>All spares available</td>
+				</tr>
+				<tr>
+					<th scope="row">Account with no shopfront</th>
+					<td>No</td>
+					<td>Yes</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<?php
+	return ob_get_clean();
+}
+add_shortcode( 'ltwoo_comparison_table', 'ltwoo_comparison_table_shortcode' );
+
+
+/**
+ * Rank Math falls back to a raw, unsanitized get_the_excerpt() for the og/twitter
+ * description whenever its own description resolves empty (no manual SEO description,
+ * no excerpt, no post content — the case for any hardcoded-template page with no real
+ * post_content, not just this one). The Understrap parent theme's `wp_trim_excerpt`
+ * filter unconditionally appends a raw "Read More..." link to every excerpt, so that
+ * raw HTML was leaking into link previews. Supplying a non-empty description here for
+ * any content-less page keeps Rank Math from ever reaching that fallback.
+ */
+add_filter( 'rank_math/frontend/description', 'qc_rank_math_empty_content_description' );
+function qc_rank_math_empty_content_description( $description ) {
+    // L-TWOO landing page: prefer the hero copy over a generic fallback.
+    if ( is_page_template( 'page-templates/page-ltwoo.php' ) ) {
+        $hero_text = get_field( 'hero_text' );
+        if ( $hero_text ) {
+            return wp_strip_all_tags( $hero_text );
+        }
+    }
+
+    if ( '' !== trim( wp_strip_all_tags( $description ) ) ) {
+        return $description;
+    }
+
+    $post_id = get_the_ID();
+    if ( ! $post_id || '' !== trim( wp_strip_all_tags( get_post_field( 'post_content', $post_id ) ) ) ) {
+        return $description;
+    }
+
+    return get_bloginfo( 'description' ) ?: get_the_title( $post_id );
+}
+
+/**
+ * "FA Icon" ACF block. ACF blocks preview via ServerSideRender, which injects real
+ * rendered markup directly into the main block editor canvas (unlike the Custom HTML
+ * block's isolated sandbox), so the icon actually shows while editing.
+ */
+add_action( 'acf/init', 'ltwoo_register_fa_icon_block' );
+function ltwoo_register_fa_icon_block() {
+
+    if ( ! function_exists( 'acf_register_block_type' ) ) {
+        return;
+    }
+
+    acf_register_block_type(
+        [
+            'name'            => 'fa-icon',
+            'title'           => __( 'FA Icon', 'understrap-child' ),
+            'description'     => __( 'A single Font Awesome icon.', 'understrap-child' ),
+            'category'        => 'widgets',
+            'icon'            => 'star-filled',
+            'keywords'        => [ 'icon', 'fontawesome', 'fa' ],
+            'render_callback' => 'ltwoo_render_fa_icon_block',
+            'supports'        => [ 'align' => false ],
+        ]
+    );
+
+    acf_add_local_field_group(
+        [
+            'key'      => 'group_ltwoo_fa_icon_block',
+            'title'    => 'FA Icon Block',
+            'fields'   => [
+                [
+                    'key'         => 'field_ltwoo_fa_icon_class',
+                    'label'       => 'Icon Classes',
+                    'name'        => 'icon_class',
+                    'type'        => 'text',
+                    'instructions' => 'e.g. fa-duotone fa-regular fa-store fa-2x',
+                ],
+                [
+                    'key'         => 'field_ltwoo_fa_icon_style',
+                    'label'       => 'Custom Style (optional)',
+                    'name'        => 'icon_style',
+                    'type'        => 'text',
+                    'instructions' => 'e.g. --fa-primary-color: rgb(245, 131, 0); --fa-secondary-color: rgb(241, 241, 241);',
+                ],
+            ],
+            'location' => [
+                [
+                    [
+                        'param'    => 'block',
+                        'operator' => '==',
+                        'value'    => 'acf/fa-icon',
+                    ],
+                ],
+            ],
+        ]
+    );
+}
+
+function ltwoo_render_fa_icon_block() {
+    $icon_class = get_field( 'icon_class' );
+    if ( ! $icon_class ) {
+        return;
+    }
+    $icon_style = get_field( 'icon_style' );
+    $style_attr = $icon_style ? ' style="' . esc_attr( $icon_style ) . '"' : '';
+    echo '<i class="' . esc_attr( $icon_class ) . '"' . $style_attr . '></i>';
+}
+
+/**
+ * Hide other shipping methods when Free Shipping is available.
+ * Ensure Postage ($25 flat rate) is the default shipping method.
+ */
+
+/**
+ * Hide other shipping methods when Free Shipping is available.
+ * Ensure Postage ($25) is the default shipping method.
+ */
+add_filter( 'woocommerce_package_rates', 'qc_hide_shipping_when_free_available', 10, 2 );
+function qc_hide_shipping_when_free_available( $rates, $package ) {
+	$has_free = false;
+	foreach ( $rates as $rate_id => $rate ) {
+		if ( 'free_shipping' === $rate->method_id ) {
+			$has_free = true;
+			break;
+		}
+	}
+
+	// If free shipping is available, show ONLY free shipping.
+	if ( $has_free ) {
+		$new_rates = [];
+		foreach ( $rates as $rate_id => $rate ) {
+			if ( 'free_shipping' === $rate->method_id ) {
+				$new_rates[ $rate_id ] = $rate;
+			}
+		}
+		return $new_rates;
+	}
+
+	// Otherwise, ensure flat rate methods (e.g. Postage) come before everything
+	// else (e.g. Local Pickup), keeping all flat rate methods, not just the first.
+	$sorted_rates = [];
+	foreach ( $rates as $rate_id => $rate ) {
+		if ( 'flat_rate' === $rate->method_id ) {
+			$sorted_rates[ $rate_id ] = $rate;
+		}
+	}
+	foreach ( $rates as $rate_id => $rate ) {
+		if ( 'flat_rate' !== $rate->method_id ) {
+			$sorted_rates[ $rate_id ] = $rate;
+		}
+	}
+
+	return $sorted_rates;
+}
+
+/**
+ * Append cart icon to the end of the primary nav menu.
+ */
+add_filter( 'wp_nav_menu_items', 'quality_add_cart_to_menu', 10, 2 );
+
+/**
+ * Return the current cart item count when the WooCommerce cart is available.
+ *
+ * @return int
+ */
+function quality_get_cart_count() {
+	if ( ! function_exists( 'WC' ) || ! WC()->cart ) {
+		return 0;
+	}
+
+	return WC()->cart->get_cart_contents_count();
+}
+
+function quality_add_cart_to_menu( $items, $args ) {
+	if ( 'primary' !== $args->theme_location || ! class_exists( 'WooCommerce' ) ) {
+		return $items;
+	}
+
+	$count = quality_get_cart_count();
+	$hide  = $count > 0 ? '' : 'display:none;';
+
+	$cart_item = '<li class="menu-item menu-item-type-custom d-none d-md-block">';
+	$cart_item .= '<a href="' . esc_url( wc_get_cart_url() ) . '" class="nav-link cart-icon-header" title="View cart">';
+	$cart_item .= '<span class="d-inline-block position-relative">';
+	$cart_item .= '<i class="fa-duotone fa-light fa-cart-shopping fa-xl" style="--fa-primary-color: rgb(245, 131, 0); --fa-secondary-color: rgb(255, 255, 255);"></i>';
+	$cart_item .= '<span class="position-absolute badge rounded-pill bg-warning text-dark cart-count" style="font-size:0.55rem; top:0; right:0; transform:translate(50%,-50%); ' . $hide . '">';
+	$cart_item .= esc_html( $count );
+	$cart_item .= '</span>';
+	$cart_item .= '</span>';
+	$cart_item .= '</a>';
+	$cart_item .= '</li>';
+
+	return $items . $cart_item;
+}
+
+/**
+ * Ensure cart fragments script loads — this makes AJAX add-to-cart updates work.
+ */
+add_action( 'wp_enqueue_scripts', 'quality_ensure_cart_fragments' );
+function quality_ensure_cart_fragments() {
+	if ( class_exists( 'WooCommerce' ) ) {
+		wp_enqueue_script( 'wc-cart-fragments' );
+	}
+}
+
+/**
+ * Cart fragment — serve updated badge HTML to the fragments system.
+ */
+add_filter( 'woocommerce_add_to_cart_fragments', 'quality_cart_count_fragment' );
+function quality_cart_count_fragment( $fragments ) {
+	ob_start();
+	$count = quality_get_cart_count();
+	?>
+	<span class="position-absolute badge rounded-pill bg-warning text-dark cart-count" style="font-size:0.55rem; top:0; right:0; transform:translate(50%,-50%); <?php echo $count > 0 ? '' : 'display:none;'; ?>">
+		<?php echo esc_html( $count ); ?>
+	</span>
+	<?php
+	$fragments['.cart-count'] = ob_get_clean();
+	return $fragments;
+}
+
+
+/**
+ * Exclude cart scripts from LiteSpeed deferral.
+ */
+add_filter( 'litespeed_optm_js_defer_exc', 'quality_exclude_cart_js_from_litespeed' );
+add_filter( 'litespeed_optm_js_delay_exc', 'quality_exclude_cart_js_from_litespeed' );
+function quality_exclude_cart_js_from_litespeed( $excludes ) {
+	$excludes[] = 'wc-cart-fragments';
+	$excludes[] = 'wc-add-to-cart';
+	$excludes[] = 'woocommerce';
+	return $excludes;
+}
+
+
+/**
+ * Load the front-page hero image eagerly, with high fetch priority.
+ *
+ * The hero image sits above the fold and is the Largest Contentful Paint
+ * element, so it must not be lazy loaded. The `skip-lazy` class keeps
+ * LiteSpeed Cache from swapping the src for its lazy-load placeholder
+ * (the loader always honours that class), and `fetchpriority="high"`
+ * tells the browser to start this request first.
+ *
+ * The image block renders dynamically, so the attributes are applied to
+ * the rendered markup rather than saved in the block content.
+ */
+add_filter( 'render_block_core/column', 'qc_hero_image_priority', 10, 2 );
+function qc_hero_image_priority( $block_content, $block ) {
+	if ( empty( $block['attrs']['className'] ) || false === strpos( $block['attrs']['className'], 'hero-column' ) ) {
+		return $block_content;
+	}
+
+	$processor = new WP_HTML_Tag_Processor( $block_content );
+
+	if ( ! $processor->next_tag( array( 'tag_name' => 'IMG' ) ) ) {
+		return $block_content;
+	}
+
+	$processor->set_attribute( 'loading', 'eager' );
+	$processor->set_attribute( 'fetchpriority', 'high' );
+	$processor->add_class( 'skip-lazy' );
+
+	return $processor->get_updated_html();
 }
