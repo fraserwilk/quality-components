@@ -892,6 +892,43 @@ function qc_hide_shipping_when_free_available( $rates, $package ) {
 }
 
 /**
+ * B2BKing hides prices from logged-out visitors (guest access restriction),
+ * replacing the price with a fixed text ("Trade only"). Show the RRP
+ * (WooCommerce regular price) instead, labelled the same way B2BKing labels
+ * it for logged-in trade accounts, while leaving purchasing still blocked
+ * for guests.
+ */
+add_filter( 'b2bking_hide_price_product_text', 'qc_show_rrp_to_guests', 10, 3 );
+function qc_show_rrp_to_guests( $pricetext, $product, $price ) {
+	if ( ! $product instanceof WC_Product ) {
+		return $pricetext;
+	}
+
+	if ( $product->is_type( 'variable' ) ) {
+		$prices = $product->get_variation_prices( true );
+		if ( empty( $prices['regular_price'] ) ) {
+			return $pricetext;
+		}
+		$min = current( $prices['regular_price'] );
+		$max = end( $prices['regular_price'] );
+		$rrp_html = ( $min === $max ) ? wc_price( $min ) : wc_format_price_range( $min, $max );
+	} else {
+		$regular_price = $product->get_regular_price();
+		if ( '' === $regular_price ) {
+			$regular_price = $product->get_price();
+		}
+		if ( '' === $regular_price ) {
+			return $pricetext;
+		}
+		$rrp_html = wc_price( wc_get_price_to_display( $product, array( 'price' => $regular_price ) ) );
+	}
+
+	$label = get_option( 'b2bking_retail_price_text_setting', esc_html__( 'RRP', 'b2bking' ) );
+
+	return '<span class="b2bking_both_prices_text b2bking_retail_price_text">' . esc_html( $label ) . ': </span><span class="b2bking_both_prices_price b2bking_retail_price_price">' . $rrp_html . '</span>';
+}
+
+/**
  * Append cart icon to the end of the primary nav menu.
  */
 add_filter( 'wp_nav_menu_items', 'quality_add_cart_to_menu', 10, 2 );
