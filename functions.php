@@ -347,6 +347,76 @@ function quality_single_product_no_sidebar( $position ) {
 }
 
 /**
+ * Find the B2BKing custom registration field mapped to the standard
+ * `billing_company` meta key (the "Company Name" field) and return its
+ * posted value. Looked up by billing connection rather than a hardcoded
+ * post ID so it keeps working if the field is ever recreated in B2BKing.
+ */
+function qc_get_posted_company_name() {
+	$fields = get_posts(
+		array(
+			'post_type'      => 'b2bking_custom_field',
+			'post_status'    => 'publish',
+			'posts_per_page' => -1,
+			'fields'         => 'ids',
+			'meta_key'       => 'b2bking_custom_field_billing_connection',
+			'meta_value'     => 'billing_company',
+		)
+	);
+
+	foreach ( $fields as $field_id ) {
+		$post_key = 'b2bking_custom_field_' . $field_id;
+		if ( ! empty( $_POST[ $post_key ] ) ) {
+			return trim( sanitize_text_field( wp_unslash( $_POST[ $post_key ] ) ) );
+		}
+	}
+
+	return '';
+}
+
+/**
+ * Require a company name on registration, since the username is derived
+ * from it (see qc_set_username_from_company_name()) rather than the email
+ * address.
+ */
+add_filter( 'woocommerce_registration_errors', 'qc_require_company_name_for_registration' );
+function qc_require_company_name_for_registration( $errors ) {
+	if ( '' === qc_get_posted_company_name() ) {
+		$errors->add( 'registration-error-missing-company-name', __( 'Please enter your company name.', 'understrap' ) );
+	}
+	return $errors;
+}
+
+/**
+ * Use the submitted company name as the account username instead of
+ * WooCommerce's default email-derived one. Collisions (e.g. a second
+ * person registering the same company) get a numeric suffix rather than
+ * failing registration outright.
+ */
+add_filter( 'woocommerce_new_customer_data', 'qc_set_username_from_company_name' );
+function qc_set_username_from_company_name( $customer_data ) {
+	$company_name = qc_get_posted_company_name();
+	if ( '' === $company_name ) {
+		return $customer_data;
+	}
+
+	$username = substr( sanitize_user( $company_name, false ), 0, 60 );
+	if ( '' === $username || ! validate_username( $username ) ) {
+		return $customer_data;
+	}
+
+	$candidate = $username;
+	$suffix    = 2;
+	while ( username_exists( $candidate ) ) {
+		$candidate = substr( $username, 0, 60 - strlen( '-' . $suffix ) ) . '-' . $suffix;
+		++$suffix;
+	}
+
+	$customer_data['user_login'] = $candidate;
+	return $customer_data;
+}
+
+/**
  * Category banner (background image + title + description) at the top of
  * product category archive pages.
  *
