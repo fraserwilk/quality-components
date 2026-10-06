@@ -453,7 +453,7 @@ function qc_category_banner() {
         $image_url ? ' style="background-image:url(' . esc_url( $image_url ) . ')"' : ''
     );
     echo '<div class="container">';
-    echo '<h1 class="category-banner__title">' . esc_html( $term->name ) . '</h1>';
+    echo '<p class="category-banner__title h1">' . esc_html( $term->name ) . '</p>';
 
     if ( $banner_page instanceof WP_Post ) {
         echo '<div class="category-banner__desc">' . apply_filters( 'the_content', $banner_page->post_content ) . '</div>';
@@ -836,6 +836,26 @@ function qc_rank_math_empty_content_description( $description ) {
 
     if ( '' !== trim( wp_strip_all_tags( $description ) ) ) {
         return $description;
+    }
+
+    // Product categories: use the term description or its linked banner page copy.
+    if ( is_product_category() ) {
+        $term = get_queried_object();
+
+        if ( $term instanceof WP_Term ) {
+            $category_description = $term->description;
+            $banner_page          = function_exists( 'get_field' ) ? get_field( 'category_banner_page', $term ) : null;
+
+            if ( '' === trim( wp_strip_all_tags( $category_description ) ) && $banner_page instanceof WP_Post ) {
+                $category_description = $banner_page->post_content;
+            }
+
+            $category_description = trim( preg_replace( '/\s+/', ' ', wp_strip_all_tags( strip_shortcodes( $category_description ) ) ) );
+
+            if ( '' !== $category_description ) {
+                return wp_html_excerpt( $category_description, 155, '&hellip;' );
+            }
+        }
     }
 
     $post_id = get_the_ID();

@@ -1,0 +1,118 @@
+sku,name,cost,rrp_inc_gst,rrp_ex_gst,retailer_ex_gst,oem_ex_gst,margin_on_rrp_ex_gst_pct,margin_on_retailer_pct,margin_on_oem_pct,rrp_below_80
+GS-ERX-ETT GROUP,LTWOO eRX-eTT 2x10-12 SPD Groupset | Genuine Factory Boxed | Time Trial,660,1149.00,1044.5,858.00,858.00,36.8,23.1,23.1,YES
+GS-GRT-GROUP,LTWOO GRT Groupset 12 SPD Gravel | Disc Brakes | Mech Gears,330.8,599.00,544.5,330.80,430.00,39.3,0,23.1,YES
+GS-GR9-GROUP,LTWOO GR9 Groupset | 11 SPD Gravel | Disc Brakes | Mech Gears,202.11,375.00,340.9,262.74,262.74,40.7,23.1,23.1,YES
+GS-ERX3-OP-GB,LTWOO eRX 2x10-12 SPD Groupset | Genuine Factory Boxed,561.47,1045,950.0,729.91,729.91,40.9,23.1,23.1,YES
+RD-ER1203-M-C,eRX Rear Derailleur | 10-12 SPD | Standard Pulley Wheel | Carbon Cage | 32t Max,176.65,329.00,299.1,230,230,40.9,23.2,23.2,YES
+RD-ER1203-OP,eRX Rear Derailleur | 10-12 SPD | Oversize Pulley Wheel | Carbon Cage | 36t Max,176.65,345.00,313.6,240,240,43.7,26.4,26.4,YES
+FD-ER1204,eRX Front Derailleur | 10-12x2 SPD | Direct Mount,100.16,199.00,180.9,130,130,44.6,23.0,23.0,YES
+ST-EG1202-R-C,eGR Shifter | ST-EG1202-R-C | 10-12 speed | Carbon | Right,89.01,187,170,124.62,124.62,47.6,28.6,28.6,YES
+GS-EGR13-GB,LTWOO eGR Groupset 1x10-13 SPD Gravel | Genuine Factory Boxed,344.05,729,662.7,481.67,481.67,48.1,28.6,28.6,YES
+ST-EG1202-L-C,eGR Shifter | ST-EG1202-L-C | 10-12 speed | Carbon,70.19,149,135.5,98.27,98.27,48.2,28.6,28.6,YES
+RD-EG1301-M-A,RD-EG1301-M-A,131.19,279,253.6,183.67,183.67,48.3,28.6,28.6,YES
+RD-EG1201-M-A,eGR Rear Derailleur | 10-13SPD | Wireless | Type C Charging Port | 51t Max,131.19,279,253.6,183.67,183.67,48.3,28.6,28.6,YES
+BT-ER01,"eRX/eR9/eR7 Seat Tube Battery Kit | Includes Holder, Batteries, Cables, Charging Cable",60.64,129.00,117.3,84,84,48.3,27.8,27.8,YES
+ST-ER1202-R,eRX Shift/Brake Lever | 10-12 SPD | Right Side | Carbon Lever,121.98,260,236.4,169,169,48.4,27.8,27.8,YES
+ST-ER1202-2L,eRX Shift/Brake Lever | 10-12 SPD | Left Side | Carbon Lever,121.98,260,236.4,169,169,48.4,27.8,27.8,YES
+BR-R07A-160R,Hydraulic Brake Caliper | BR-R07A-R-160 | Rear | Flat Mount,39.06,85.00,77.3,54.6,54.6,49.5,28.5,28.5,YES
+BR-R04A-160F,Hydraulic Brake Caliper | Front | Direct Mount | For 160mm Rotor,39.05,85.00,77.3,54.6,54.6,49.5,28.5,28.5,YES
+SP-BR-CompBolt,L-TWOO Brake Hose Compression Bolt,2,4.5,4.1,,4.5,51.1,,55.6,YES
+ST-GR1211-R,Shift/Hydraulic Brake Lever | ST-GR1211-R-C | Right Side | Carbon Lever | 1x12 SPD,102.22,235.00,213.6,143.1,143.1,52.2,28.6,28.6,YES
+ST-GR1211-L,Shift/Hydraulic Brake Lever | ST-GR1211-L-C | Left Side | Carbon Lever | 12x1 SPD,102.22,235.00,213.6,143.1,143.1,52.2,28.6,28.6,YES
+FD-R1101-DW,R9 Front Derailleur | FD-R1101-DW | 11x2 SPD | Direct Mount | With Outer Cable Stop,15.61,36,32.7,18,18,52.3,13.3,13.3,YES
+RD-GR1211-L-A,GRT Rear Derailleur | RD-GR1211-L-C | 12 SPD 11-50t | Carbon Cage,48.24,119.00,108.2,67.54,67.54,55.4,28.6,28.6,YES
+ST-GR1105-L,GR9 Shift/Hydraulic Brake Lever | ST-GR1105-L | Left Side | 11x1 SPD,44.77,115.00,104.5,62,62,57.2,27.8,27.8,YES
+ST-ERT1201-R-C,eRX-eTT Shift/Brake Lever | SW-ERT1201-R-C | 10-12 SPD | Right Side,113.3,294,267.3,147,147,57.6,22.9,22.9,YES
+ST-ERT1201-L,eRX-eTT Shift/Brake Lever | ST-ERT1201-2L-C | 10-12x2 SPD | Left Side,113.3,294,267.3,147,147,57.6,22.9,22.9,YES
+ST-GR1105-R,GR9 Shift/Hydraulic Brake Lever | ST-GR1105-R | Right Side | 1x11 SPD,44.77,119.00,108.2,64,64,58.6,30.0,30.0,YES
+SW-ERT1200-R,eRX-eTT Remote Electronic Shifter | SW-ERT1200-R | 10-12 SPD | Right Side,80.51,224,203.6,112,112,60.5,28.1,28.1,YES
+SW-ERT1200-L,eRX-eTT Remote Electronic Shifter | SW-ERT1200-2L | 10-12x2 SPD | Left Side,80.51,224,203.6,112,112,60.5,28.1,28.1,YES
+CS-M1000-42T,Cassette 10 SPD 11-42T,25,72,65.5,36,36,61.8,30.6,30.6,YES
+CS-M1000-46T,Cassette 10 SPD 11-46T,25,72,65.5,36,36,61.8,30.6,30.6,YES
+BR-M00-R,Hydraulic Brake Caliper | BR-M00-R | Rear | 2 Piston,9.5,30,27.3,14,14,65.2,32.1,32.1,YES
+BR-M00-F,Hydraulic Brake Caliper | BR-M00B-160F | Front | 2 Piston,9.5,30,27.3,14,14,65.2,32.1,32.1,YES
+CS-M1100-42T,Cassette 11 SPD 11-42T,25,79,71.8,39,39,65.2,35.9,35.9,YES
+CS-M1100-46T,Cassette 11 SPD 11-46T,25,79,71.8,39,39,65.2,35.9,35.9,YES
+CS-M1100-50T,Cassette 11 SPD 11-50T,25,79,71.8,39,39,65.2,35.9,35.9,YES
+RD-GR1111-L-A,GR9 Rear Derailleur | RD-GR1111-L-A | 11 SPD | Alloy Cage,34.46,109.00,99.1,55,55,65.2,37.3,37.3,YES
+RD-R0900-M,LTWOO R5 Rear Der | RD-R0900 | 9 SPD | Medium Cage,6.86,22,20,10.29,10.29,65.7,33.3,33.3,YES
+CS-M1200-52T,Cassette 12 SPD 11-52T,28.72,99,90.0,49,49,68.1,41.4,41.4,YES
+CS-M1200-50T,Cassette 12 SPD 11-50T,24.92,89,80.9,45,45,69.2,44.6,44.6,YES
+RD-A1210-L-A,AX Rear Derailleur | Long | 12 SPD | SHIM,28.94,104,94.5,52,52,69.4,44.3,44.3,YES
+RD-R1012-M,R7 Rear Derailleur | RD-R1012-M | 10 SPD | Alloy Cage,18.83,68,61.8,34,34,69.5,44.6,44.6,YES
+BL-M00-3R,Hydraulic Disc Brake Lever | BL-M00-3R | Right-Side | Three-Finger,9.5,35.00,31.8,16,16,70.1,40.6,40.6,YES
+BL-M00-3L,Hydraulic Disc Brake Lever | BL-M00-3L | Left-Side | Three Finger,9.5,35,31.8,16,16,70.1,40.6,40.6,YES
+FD-R1101-DT,R9 Front Derailleur | FD-R1101-DT | 11x2 SPD | Direct Mount | No Outer Cable Stop,11.74,44,40,22,22,70.7,46.6,46.6,YES
+CS-M0900-32T,Cassette 9 SPD 11-32T,12.88,50,45.5,25,25,71.7,48.5,48.5,YES
+CS-M0900-34T,Cassette 9 SPD 11-34T,12.88,50,45.5,25,25,71.7,48.5,48.5,YES
+CS-M0900-36T,Cassette 9 SPD 11-36T,12.88,50,45.5,25,25,71.7,48.5,48.5,YES
+CS-M0900-42T,Cassette 9 SPD 11-42T,12.88,50,45.5,25,25,71.7,48.5,48.5,YES
+RD-R1112-M,R9 Rear Derailleur | RD-R1112-M | 11 SPD | Medium Cage,18.89,75,68.2,35,35,72.3,46.0,46.0,YES
+ST-R1103-R,R9 Shift/Hydraulic Brake Lever | ST-R1103-R | 11x2 SPD Right Side,44.77,178.00,161.8,89,89,72.3,49.7,49.7,YES
+ST-R1103-2L,R9 Shift/Hydraulic Brake Lever | ST-R1103-2L | 11x2 SPD Left Side,44.77,178,161.8,89,89,72.3,49.7,49.7,YES
+SL-A1206-R,SL-A1206-R,14,56,50.9,28,28,72.5,50,50,YES
+RD-A1110-LX,RD-A1110-LX,17.69,72,65.5,36,36,73.0,50.9,50.9,YES
+BL-M00-2R,Hydraulic Disc Brake Lever | BL-M00-2R | Right-Side | Two Finger,8.5,35,31.8,17.5,17.5,73.3,51.4,51.4,YES
+BL-M00-2L,Hydraulic Disc Brake Lever | BL-M00-2L | Left-Side | Two Finger,8.5,35,31.8,17.5,17.5,73.3,51.4,51.4,YES
+ST-R0703-L,R2 Brake Lever | ST-R0703-L | Left Side | Use with ST-R0703-R for 1x7 SPD | Junior/Compact Grip,15.44,64,58.2,32,32,73.5,51.8,51.8,YES
+CS-M1200-46T,Cassette 12 SPD 11-46T,20.9,89,80.9,45,45,74.2,53.6,53.6,YES
+ST-R1105-R,R9 Shift/Cable Brake Lever | ST-R1105-R | 11x2 SPD Right Side,33.77,144,130.9,72,72,74.2,53.1,53.1,YES
+ST-R1105-2L,R9 Shift/Cable Brake Lever | ST-R1105-2L | 11x2 SPD Left Side,33.77,144,130.9,72,72,74.2,53.1,53.1,YES
+RD-A1110-L,RD-A1110-L,17.69,76,69.1,38,38,74.4,53.4,53.4,YES
+ST-R1005-R,R7 Shift/Cable Brake Lever | ST-R1005-R | 10x2 SPD Right Side,25.25,112,101.8,56,56,75.2,54.9,54.9,YES
+ST-R1005-2L,R7 Shift/Cable Brake Lever | ST-R1005-2L | 10x2 SPD | Left Side,25.25,112,101.8,56,56,75.2,54.9,54.9,YES
+RD-R1000-M,R7 Rear Derailleur | RD-R1000-M |10 SPD Medium Cage,10.77,48,43.6,24,24,75.3,55.1,55.1,YES
+SL-A1116-R,SL-A1116-R,9.33,42,38.2,21,21,75.6,55.6,55.6,YES
+ST-R0705-R,R2 Shift/Brake Lever | ST-R0705-R | 7 SPD | Right Side | Cable Brake,15.44,70,63.6,35,35,75.7,55.9,55.9,YES
+ST-R0705-2L,R2 Shift/Brake Lever | ST-R0705-2L | 2 SPD | Left Side | Cable Brake,15.44,70,63.6,35,35,75.7,55.9,55.9,YES
+RD-A0900-L,A5 Rear Derailleur | Long Cage | Max. 36T Sprocket | 9 SPD | SRAM,12.72,59.00,53.6,28.5,28.5,76.3,55.4,55.4,YES
+RD-A1010-LX,A5 Rear Derailleur | RD-A1010-LX | XL Cage | Max 46T Sprocket | 10 SPD | SHIM,13.36,64,58.2,32,32,77.0,58.2,58.2,YES
+RD-A1010-S,A7 Rear Der | Short | 10 SPD,13.02,64,58.2,32,32,77.6,59.3,59.3,YES
+RD-A1010-L,RD-A1010-L,13.02,64,58.2,32,32,77.6,59.3,59.3,YES
+ST-R0703-R,R2 Shift/Brake Lever | ST-R0703-R | 7 SPD | Right Side | Junior/Compact Grip,15.44,76,69.1,38,38,77.7,59.4,59.4,YES
+ST-R0703-2L,R2 Shift/Brake Lever | ST-R0703-2L | 7x2 SPD | Left Side | Junior/Compact Grip,15.44,76,69.1,38,38,77.7,59.4,59.4,YES
+RD-A0910-S,A5 Rear Derailleur | Short Cage | Max. 36T Sprocket | 9 SPD | SRAM,11.58,57,51.8,28.5,28.5,77.7,59.4,59.4,YES
+RD-A0910-L,A5 Rear Derailleur | Long Cage | Max. 42T Sprocket  | 9 SPD | SRAM,11.58,57,51.8,28.5,28.5,77.7,59.4,59.4,YES
+FD-R1001-DT,R7 Front Derailleur | FD-R1001-DT | 10x2 SPD | Braze-on,6.21,31,28.2,15.5,15.5,78.0,59.9,59.9,YES
+RD-A0902-LX,A5 Rear Derailleur | XLong Cage | Max. 42T Sprocket | 9 SPD | SRAM,12.72,64,58.2,32,32,78.1,60.2,60.2,YES
+BR-M01-R,Hydraulic Brake Caliper | BR-M01B-160R | Rear | 4 Piston,12,72,65.5,36,36,81.7,66.7,66.7,
+BR-M01-F,Hydraulic Brake Caliper | BR-M01B-160F | Front | 4 Piston,12,72,65.5,36,36,81.7,66.7,66.7,
+FD-A0912,A5 Front Derailleur | 3x9 SPD | Top/Bottom Pull | 31.8/34.9 Clamp,5.95,36,32.7,18,18,81.8,66.9,66.9,
+SL-A1116-2L,SL-A1116-2L,5.47,34,30.9,17,17,82.3,67.8,67.8,
+FD-A0712,A2 Front Derailleur | 3x7 SPD | Down Pull | 31.8/34.9mm,3.54,23,20.9,11.5,11.5,83.1,69.2,69.2,
+FD-A1008,A7 Front Derailleur | FD-A1008 | 2 x 10 SPD | Top/Bottom Pull,4.82,32,29.1,16,16,83.4,69.9,69.9,
+FD-A0908,A5 Front Derailleur | 2x9 SPD | Top/Bottom Pull | 31.8/34.9 Clamp,4.34,29,26.4,14.5,14.5,83.5,70.1,70.1,
+FD-A1108,FD-A1108,6.27,42,38.2,21,21,83.6,70.1,70.1,
+SL-A1016-3L,A7 Shift Lever | SL-A1016-3L | Left | 9 SPD | SHIM,5.02,34,30.9,17,17,83.8,70.5,70.5,
+FD-A0802,A3 Front Derailleur | FD-A0802 | 8x3 SPD | Down-Pull,3.54,24,21.8,12,12,83.8,70.5,70.5,
+RD-A1000-L,A7 Rear Derailleur | RD-A1000-L | Long Cage | Max 36T Sprocket | 10 SPD | SHIM,6.43,44,40,22,22,83.9,70.8,70.8,
+SL-A0727-3L,A2 Shift Lever | SL-A0727-3L | 3 SPD | Left-side | SHIM 2:1,3.54,25,22.7,12.5,12.5,84.4,71.7,71.7,
+FD-A1012,A7 Front Derailleur | FD-A1012 | 3 x 10 SPD | Top/Bottom Pull,5.04,36,32.7,18,18,84.6,72,72,
+SL-A0827-3L,A3 Shift Lever | SL-A0827-3L | 8x3 SPD | Left-Side | Shim 2:1,4.34,32,29.1,16,16,85.1,72.9,72.9,
+DS-R216-A,Brake Rotor | DS-R216-A | 160mm | 6-Bolt,2.38,18,16.4,9,9,85.5,73.6,73.6,
+SL-A0916-2L,A5 Shift Lever | SL-A0916-2L | 2x9 SPD | Left Side | SRAM,4.18,32,29.1,16,16,85.6,73.9,73.9,
+SL-A0905-3L,A5 Shift Lever | SL-A0905-3L | 3x9 SPD | Left Side | SRAM/SHIM,4.18,32,29.1,16,16,85.6,73.9,73.9,
+SL-A0727-R-2,A2 Shift Lever | SL-A0727-R | 7 SPD | Right-side | SHIM 2:1,3.22,25,22.7,12.5,12.5,85.8,74.2,74.2,
+SL-A1016-2L,A7 Shift Lever | SL-A1016-2L | Left | 2x10 SPD,4.34,34,30.9,17,17,86.0,74.5,74.5,
+SL-A1005-3L,SL-A1005-3L,4.34,34,30.9,17,17,86.0,74.5,74.5,
+SL-A1016-R,A7 Shift Lever | SL-A1016-R | Right | 10x2 SPD,4.82,38,34.5,19,19,86.0,74.6,74.6,
+SL-A1006-R,A7 Shift Lever | SL-A1006-R | Right | 10 x 1 SPD | No Window,4.82,38,34.5,19,19,86.0,74.6,74.6,
+SL-A1005-R,SL-A1005-R,4.82,38,34.5,19,19,86.0,74.6,74.6,
+SL-A0827-R,A3 Shift Lever | SL-A0827-R-2 | 8 SPD | Right-Side | Shim 2:1,4.02,32,29.1,16,16,86.2,74.9,74.9,
+SL-A0927-2L,A5 Shift Lever |,4,32,29.1,16,16,86.2,75,75,
+SL-A0927-3L,A5 Shift Lever | SL-A0927-3L | 3x9 SPD | Left Side | SHIM,4,32,29.1,16,16,86.2,75,75,
+SL-A0916-R,A5 Shift Lever | SL-A0916-R | 9x2/3 SPD | Right Side | SRAM,4.5,36,32.7,18,18,86.2,75,75,
+SL-A0905-R,A5 Shift Lever | SL-A0905-R | 9x3 SPD | Right Side | SRAM,4.5,36,32.7,18,18,86.2,75,75,
+ST-A0810-R,A3 Shift/Brake Lever | ST-A0810-R-2 | 8 SPD | Right-Side | Shim 2:1,3.86,31,28.2,15.5,15.5,86.3,75.1,75.1,
+ST-A0810-3L,A3 Shift/Brake Lever | ST-A0810-3L | 8x3 SPD | Left-Side | Shim 2:1,3.86,31,28.2,15.5,15.5,86.3,75.1,75.1,
+RD-A0807-M,A3 Rear Derailleur | RD-A0807-M-2 | Medium Cage | 8 SPD | SHIM 2:1,4.02,33,30.0,16.5,16.5,86.6,75.6,75.6,
+RD-A0707-M-2,A2 Rear Derailleur | RD-A0707-M-2 | 7 SPD | Medium Cage | SHIM 2:1,4.02,33,30.0,16,16,86.6,74.9,74.9,
+ST-A0910-R,A5 Shift/Brake Lever | ST-A0910-R | 9 SPD | Right Side | SHIM,4.02,34,30.9,17,17,87.0,76.4,76.4,
+ST-A0910-3L,A5 Shift/Brake Lever | ST-A0910-3L | 9x3 SPD | Left Side | SHIM,4.02,34,30.9,17,17,87.0,76.4,76.4,
+SL-A0927-R-2,A5 Shift Lever | SL-A0927-R-2 | 9x2/3 SPD | Right Side | SHIM,4,36,32.7,18,18,87.8,77.8,77.8,
+DS-R214-A,Brake Rotor | DS-R214-A | 140mm | 6-Bolt,2,18,16.4,9,9,87.8,77.8,77.8,
+ST-A0710-R,A2 Shift/Brake Lever |ST-A0710-R-2 | 7 SPD | Right-side | SHIM 2:1,3.54,33,30.0,14.5,14.5,88.2,75.6,75.6,
+ST-A0710-3L,A2 Shift/Brake Lever | ST-A0710-3L | 3 SPD | Left-side | SHIM 2:1,3.54,33,30.0,14.5,14.5,88.2,75.6,75.6,
+SL-A0906-R,SL-A0906-R,4.18,44,40,22,22,89.5,81,81,
+RD-A0902-L,A5 Rear Derailleur | Long Cage | Max. 42T Sprocket | 9 SPD | SHIM,4.34,50,45.5,25,25,90.5,82.6,82.6,
+RD-A0902-M,A5 Rear Derailleur | Medium Cage | Max. 34T Sprocket | 9 SPD | SHIM,4.65,57,51.8,28.5,28.5,91.0,83.7,83.7,
