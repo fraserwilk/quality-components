@@ -1019,6 +1019,84 @@ function qc_show_rrp_to_guests( $pricetext, $product, $price ) {
 }
 
 /**
+ * ChatGPT - Add the publicly displayed RRP to Rank Math's Product schema when a
+ * trade-only product has no active WooCommerce price and therefore no Offer.
+ *
+ * Normal Rank Math offers are left untouched. This changes structured data
+ * only; it does not make the product purchasable by logged-out visitors.
+ *
+ * @param array $entity Rank Math Product schema entity.
+ * @return array
+ */
+function qc_add_rrp_offer_to_rank_math_product( $entity ) {
+	if ( ! function_exists( 'is_product' ) || ! is_product() || ! empty( $entity['offers'] ) ) {
+		return $entity;
+	}
+
+	$product = wc_get_product( get_queried_object_id() );
+	if ( ! $product instanceof WC_Product ) {
+		return $entity;
+	}
+
+	$prices = array();
+	if ( $product->is_type( 'variable' ) ) {
+		$variation_prices = $product->get_variation_prices( true );
+		if ( ! empty( $variation_prices['regular_price'] ) ) {
+			$prices = array_values( array_filter( $variation_prices['regular_price'], 'strlen' ) );
+		}
+	} else {
+		$regular_price = $product->get_regular_price();
+		if ( '' !== $regular_price ) {
+			$prices[] = wc_get_price_to_display( $product, array( 'price' => $regular_price ) );
+		}
+	}
+
+	if ( empty( $prices ) ) {
+		return $entity;
+	}
+
+	$prices        = array_map( 'floatval', $prices );
+	$lowest_price  = wc_format_decimal( min( $prices ), wc_get_price_decimals() );
+	$highest_price = wc_format_decimal( max( $prices ), wc_get_price_decimals() );
+	$availability  = $product->is_in_stock() ? ( 'onbackorder' === $product->get_stock_status() ? 'BackOrder' : 'InStock' ) : 'OutOfStock';
+	$seller        = array(
+		'@type' => 'Organization',
+		'@id'   => trailingslashit( home_url() ),
+		'name'  => get_bloginfo( 'name' ),
+		'url'   => home_url(),
+	);
+
+	if ( $lowest_price === $highest_price ) {
+		$offer = array(
+			'@type'           => 'Offer',
+			'price'           => $lowest_price,
+			'priceCurrency'   => get_woocommerce_currency(),
+			'priceValidUntil' => gmdate( 'Y-12-31', time() + YEAR_IN_SECONDS ),
+			'availability'    => 'https://schema.org/' . $availability,
+			'itemCondition'   => 'https://schema.org/NewCondition',
+			'url'             => $product->get_permalink(),
+			'seller'          => $seller,
+		);
+	} else {
+		$offer = array(
+			'@type'         => 'AggregateOffer',
+			'lowPrice'      => $lowest_price,
+			'highPrice'     => $highest_price,
+			'offerCount'    => count( $prices ),
+			'priceCurrency' => get_woocommerce_currency(),
+			'availability'  => 'https://schema.org/' . $availability,
+			'url'           => $product->get_permalink(),
+			'seller'        => $seller,
+		);
+	}
+
+	$entity['offers'] = $offer;
+
+	return $entity;
+}
+add_filter( 'rank_math/snippet/rich_snippet_product_entity', 'qc_add_rrp_offer_to_rank_math_product' );
+
+/**
  * Append cart icon to the end of the primary nav menu.
  */
 add_filter( 'wp_nav_menu_items', 'quality_add_cart_to_menu', 10, 2 );
