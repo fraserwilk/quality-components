@@ -1206,3 +1206,8 @@ function qc_hero_image_priority( $block_content, $block ) {
 
 	return $processor->get_updated_html();
 }
+
+/**
+ * Remove Rank Math's Slack/Twitter "Written by / Time to read" label tags everywhere.
+ */
+add_filter( 'rank_math/opengraph/slack_enhanced_data', '__return_empty_array' );

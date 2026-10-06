@@ -11183,6 +11183,19 @@ body {
   flex-direction: column;
 }
 
+body.admin-bar {
+  min-height: calc(100vh - var(--wp-admin--admin-bar--height, 32px));
+}
+
+#page {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+#page #wrapper-footer-full {
+  margin-top: auto;
+}
+
 #page {
   flex: 1;
   display: flex;

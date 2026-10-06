@@ -4,6 +4,22 @@ body {
 	flex-direction: column;
 }
 
+// Account for the admin bar (logged-in users) so the page isn't taller than the viewport.
+body.admin-bar {
+	min-height: calc(100vh - var(--wp-admin--admin-bar--height, 32px));
+}
+
+// Sticky footer: let the page wrapper fill the body and push the footer down.
+#page {
+	flex: 1 0 auto;
+	display: flex;
+	flex-direction: column;
+
+	#wrapper-footer-full {
+		margin-top: auto;
+	}
+}
+
 #page {
 	flex: 1;
 	display: flex;
