@@ -13471,5 +13471,11 @@ body.understrap-no-sidebar .wp-block-cover.alignwide {
 .page-id-256 .wp-block-buttons {
   margin-bottom: 2rem;
 }
+.page-id-256 img {
+  width: 100%;
+  height: 450px;
+  -o-object-fit: cover;
+  object-fit: cover; /* or 'contain' */
+}
 
 /*# sourceMappingURL=child-theme.css.map */
