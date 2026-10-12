@@ -456,7 +456,15 @@ function qc_category_banner() {
     echo '<p class="category-banner__title h1">' . esc_html( $term->name ) . '</p>';
 
     if ( $banner_page instanceof WP_Post ) {
-        echo '<div class="category-banner__desc">' . apply_filters( 'the_content', $banner_page->post_content ) . '</div>';
+        $cache_key = 'qc_banner_' . $banner_page->ID . '_' . strtotime( $banner_page->post_modified_gmt );
+        $desc_html = get_transient( $cache_key );
+
+        if ( false === $desc_html ) {
+            $desc_html = apply_filters( 'the_content', $banner_page->post_content );
+            set_transient( $cache_key, $desc_html, DAY_IN_SECONDS );
+        }
+
+        echo '<div class="category-banner__desc">' . $desc_html . '</div>';
     } elseif ( ! empty( $term->description ) ) {
         echo '<div class="category-banner__desc">' . wpautop( wp_kses_post( $term->description ) ) . '</div>';
     }
