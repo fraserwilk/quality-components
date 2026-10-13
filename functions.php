@@ -874,6 +874,19 @@ function qc_rank_math_empty_content_description( $description ) {
     return get_bloginfo( 'description' ) ?: get_the_title( $post_id );
 }
 
+/* Rank Math filter to suppress the author schema */
+add_filter( 'rank_math/json_ld', function ( $data ) {
+    if ( isset( $data['richSnippet'] ) ) {
+        unset( $data['richSnippet']['author'] );
+    }
+    foreach ( $data as $key => $entity ) {
+        if ( is_array( $entity ) && isset( $entity['author'] ) ) {
+            unset( $data[ $key ]['author'] );
+        }
+    }
+    return $data;
+}, 99 );
+
 /**
  * "FA Icon" ACF block. ACF blocks preview via ServerSideRender, which injects real
  * rendered markup directly into the main block editor canvas (unlike the Custom HTML
