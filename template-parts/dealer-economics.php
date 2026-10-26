@@ -55,7 +55,7 @@ $dispatch_label = ( $dispatch_speed === 'next-day' ) ? 'next' : 'same';
 					<p>
 						Order before <strong><?php echo esc_html( $dispatch_cutoff ); ?></strong> AEST,
 						dispatch <strong><?php echo esc_html( $dispatch_label ); ?></strong> business day.
-						Shipping capped at $25.
+						Shipping capped at $9.50 - free for orders over $100 ex.
 					</p>
 				</div>
 			</div>
