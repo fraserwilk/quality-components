@@ -1219,3 +1219,13 @@ function qc_hero_image_priority( $block_content, $block ) {
  * Remove Rank Math's Slack/Twitter "Written by / Time to read" label tags everywhere.
  */
 add_filter( 'rank_math/opengraph/slack_enhanced_data', '__return_empty_array' );
+
+
+/**
+ * WebToffee plugin - Toggle the received seal based on order status.
+ */
+add_filter( 'wf_pklist_toggle_received_seal', 'qc_toggle_received_seal', 10, 3 );
+function qc_toggle_received_seal( $is_enable_received_seal, $template_type, $order ) {
+    $paid_statuses = array( 'processing', 'completed' );
+    return in_array( $order->get_status(), $paid_statuses, true );
+}
